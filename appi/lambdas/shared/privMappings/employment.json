@@ -1,0 +1,31 @@
+{
+    "primaryKey": "employmentId",
+    "PROE1": "totalEmp",
+    "PROE2": "barganingDue",
+    "PROE3": "unionizedEmp",
+    "PROE4": "layoffs",
+    "PROE5": "empHandbook",
+    "PROE6": "hrPolicies",
+    "PROE7": {
+        "keys": [
+            "turnover"
+        ]
+    },
+    "PROE8": {
+        "rowHeader": true,
+        "keys": [
+            "domesticFt",
+            "domesticPt",
+            "foreignEmp",
+            "contractEmp",
+            "leasedEmp"
+        ]
+    },
+    "PROE11": [
+        "domesticFtType",
+        "domesticPtType",
+        "foreignEmpType",
+        "contractEmpType",
+        "leasedEmpType"
+    ]
+}

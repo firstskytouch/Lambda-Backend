@@ -1,0 +1,258 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: APPI Backend - Datasources
+Parameters:
+  StackName:
+    Type: String
+    Default: appi
+
+  EnvironmentType:
+    Type: String
+    Default: dev
+    AllowedValues:
+    - dev
+    - qa
+    - prod
+
+  ElasticSearchDomain:
+    Description: Endpoint of elastic search
+    Type: String
+
+  # NETWORK
+
+  SecurityGroupId:
+    Type: AWS::EC2::SecurityGroup::Id
+  Subnets:
+    Type: List<AWS::EC2::Subnet::Id>
+
+Resources:
+
+  # S3
+
+  WorksheetsBucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      AccessControl: Private
+      BucketName: !Sub '${StackName}-${EnvironmentType}-users-worksheets'
+      VersioningConfiguration: 
+        Status: Enabled
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: aws:kms
+              KMSMasterKeyID: alias/aws/s3
+
+  # DYNAMODB
+
+  StreamTriggerLambdaExecutionRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service: 
+                - lambda.amazonaws.com
+            Action: 
+             - sts:AssumeRole
+          - Effect: Allow
+            Principal:
+              Service:
+                - dynamodb.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+      Policies:
+        - PolicyName: log-write-and-vpc-access
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+            - Effect: Allow
+              Action:
+                - 'ec2:CreateNetworkInterface'
+                - 'ec2:DescribeNetworkInterfaces'
+                - 'ec2:DeleteNetworkInterface'
+                - 'ec2:DescribeVpnConnections'
+              Resource: '*'
+            - Effect: Allow
+              Action:
+                - 'logs:CreateLogGroup'
+                - 'logs:CreateLogStream'
+                - 'logs:DescribeLogGroups'
+                - 'logs:DescribeLogStreams'
+                - 'logs:PutLogEvents'
+              Resource: '*'
+        - PolicyName: allow-lambda-esm
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+            - Effect: Allow
+              Action:
+                - 'dynamodb:GetRecords'
+                - 'dynamodb:GetShardIterator'
+                - 'dynamodb:DescribeStream'
+                - 'dynamodb:ListStreams'
+              Resource: '*'
+            - Effect: Allow
+              Action:
+                - 'lambda:CreateEventSourceMapping'
+              Resource: '*'
+
+  # TABLES
+
+  UsersTable:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      TableName: !Sub '${StackName}-${EnvironmentType}-users'
+      AttributeDefinitions:
+        - AttributeName: user_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: user_id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: '5'
+        WriteCapacityUnits: '5'
+
+  WorksheetsTable:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      TableName: !Sub '${StackName}-${EnvironmentType}-worksheets'
+      AttributeDefinitions:
+        - AttributeName: worksheet_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: worksheet_id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: '5'
+        WriteCapacityUnits: '5'
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+
+  ProgramsTable:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      TableName: !Sub '${StackName}-${EnvironmentType}-programs'
+      AttributeDefinitions:
+        - AttributeName: program_id
+          AttributeType: S
+        - AttributeName: company_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: program_id
+          KeyType: HASH
+        - AttributeName: company_id
+          KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: '5'
+        WriteCapacityUnits: '5'
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+
+  CarriersTable:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      TableName: !Sub '${StackName}-${EnvironmentType}-carriers'
+      AttributeDefinitions:
+        - AttributeName: name
+          AttributeType: S
+      KeySchema:
+        - AttributeName: name
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: '2'
+        WriteCapacityUnits: '2'
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+
+  # STREAM TRIGGERS
+
+  WorksheetsTriggerFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-worksheets-stream-trigger'
+      MemorySize: 1536
+      Timeout: 3
+      Runtime: nodejs10.x
+      Role: !GetAtt StreamTriggerLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          tableName: !Ref WorksheetsTable
+          elasticSearchEndpoint: !Ref ElasticSearchDomain
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  WorksheetsStreamEventSourceMapping:
+    Type: 'AWS::Lambda::EventSourceMapping'
+    Properties: 
+      BatchSize: 100
+      Enabled: true
+      EventSourceArn: !GetAtt WorksheetsTable.StreamArn
+      FunctionName: !GetAtt WorksheetsTriggerFunction.Arn
+      StartingPosition: TRIM_HORIZON
+
+  ProgramsTriggerFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-programs-stream-trigger'
+      MemorySize: 1536
+      Timeout: 3
+      Runtime: nodejs10.x
+      Role: !GetAtt StreamTriggerLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          tableName: !Ref ProgramsTable
+          elasticSearchEndpoint: !Ref ElasticSearchDomain
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  ProgramsStreamEventSourceMapping:
+    Type: 'AWS::Lambda::EventSourceMapping'
+    Properties: 
+      BatchSize: 100
+      Enabled: true
+      EventSourceArn: !GetAtt ProgramsTable.StreamArn
+      FunctionName: !GetAtt ProgramsTriggerFunction.Arn
+      StartingPosition: TRIM_HORIZON
+
+Outputs:
+  UsersTableName:
+    Value: !Ref UsersTable
+
+  WorksheetsTableName:
+    Value: !Ref WorksheetsTable
+
+  ProgramsTableName:
+    Value: !Ref ProgramsTable
+
+  WorksheetsBucket:
+    Value: !Ref WorksheetsBucket
+  
+  CarriersTableName:
+    Value: !Ref CarriersTable
+    Export:
+      Name: !Sub DynamoCarriersTable-${EnvironmentType}

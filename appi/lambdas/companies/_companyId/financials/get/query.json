@@ -1,0 +1,9 @@
+{
+  "queries": [
+  	"select periodTypeName as tab, section, fiscalyear as x, value as y from api_schema.Companies_Financials where section != 'assets' and periodTypeName = 'Annual' order by x desc limit 6;",
+  	"select periodTypeName as tab, section, fiscalyear, fiscalquarter as x, value as y from api_schema.Companies_Financials where section != 'assets' and periodTypeName = 'Quarterly' order by periodenddate desc limit 8;"
+  ],
+  "query_predicate_name": "symbolValue",
+  "metadata": {
+  }
+}

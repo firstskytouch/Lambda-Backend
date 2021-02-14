@@ -1,0 +1,99 @@
+{
+  "type" : "object",
+  "title" : "User",
+  "required" : [ "email", "user_id" ],
+  "properties" : {
+    "user_id" : {
+      "type" : "string",
+      "default" : ""
+    },
+    "email" : {
+      "type" : "string",
+      "format" : "email",
+      "default" : ""
+    },
+    "created_at" : {
+      "type" : "string",
+      "format" : "date"
+    },
+    "updated_at" : {
+      "type" : "string",
+      "format" : "date"
+    },
+    "worksheets" : {
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "worksheet_id" : {
+            "type" : "string",
+            "default" : ""
+          },
+          "cik" : {
+            "type" : "string",
+            "default" : ""
+          },
+          "user_id" : {
+            "type" : "string",
+            "default" : ""
+          },
+          "state" : {
+            "type" : "string",
+            "enum" : [ "wip", "pdf" ]
+          },
+          "submission" : {
+            "type" : "object",
+            "properties" : {
+              "submission_id" : {
+                "type" : "string",
+                "default" : ""
+              },
+              "type" : {
+                "type" : "string",
+                "enum" : [ "xs", "primary" ]
+              },
+              "policy_id" : {
+                "type" : "string",
+                "default" : ""
+              },
+              "agency_id" : {
+                "type" : "string",
+                "default" : ""
+              },
+              "effective_date" : {
+                "type" : "string",
+                "format" : "date",
+                "default" : ""
+              }
+            }
+          },
+          "notes" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "note_id" : {
+                  "type" : "string",
+                  "default" : ""
+                },
+                "note_text" : {
+                  "type" : "string",
+                  "default" : ""
+                },
+                "note_page" : {
+                  "type" : "string",
+                  "enum" : [ "overview", "trading", "financial", "risk", "news" ]
+                },
+                "updated_at" : {
+                  "type" : "string",
+                  "format" : "date",
+                  "default" : ""
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

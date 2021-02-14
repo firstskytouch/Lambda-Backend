@@ -1,0 +1,19 @@
+{
+    "primaryKey": "incomeStatementId",
+    "PROI1": "month",
+    "PROI3": {
+        "rowHeader": true,
+        "keys": [
+            "totalRevenue",
+            "costOfSales",
+            "grossProfie",
+            "amortDepreciation",
+            "totalOpExpenses",
+            "operatingIncome",
+            "interestExpIncome",
+            "netIncome",
+            "nonCtrlInterests",
+            "netCompIncome"
+        ]
+    }
+}

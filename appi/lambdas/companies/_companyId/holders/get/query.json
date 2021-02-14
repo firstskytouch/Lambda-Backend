@@ -1,0 +1,10 @@
+{
+  "queries": [
+  	"select percent_all_insider_shares from api_schema.Holders_Percent_Insider_Shares;",
+  	"select filingdate from api_schema.Holders_Last_Filing_Date;"
+  ],
+  "query_predicate_name": "symbolValue",
+  "metadata": {
+  }
+}
+

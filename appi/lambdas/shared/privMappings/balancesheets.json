@@ -1,0 +1,19 @@
+{
+    "primaryKey": "balanceSheetId",
+    "PROB1": "month",
+    "PROB3": {
+        "rowHeader": true,
+        "keys": [
+            "cashEquiv",
+            "totalCurrAssets",
+            "totalAssets",
+            "deferredRevenue",
+            "totalCurrLiabilities",
+            "shortTermDebt",
+            "longTermDebt",
+            "totalLiabilities",
+            "retainedEarnings",
+            "totalEquity"
+        ]
+    }
+}

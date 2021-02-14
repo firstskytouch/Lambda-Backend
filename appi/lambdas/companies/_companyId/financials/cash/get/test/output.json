@@ -1,0 +1,556 @@
+{
+   "annual": {
+       "period_ending": {
+           "title": "Period Ending",
+           "table": {
+               "columns": [
+                   {
+                       "title": "item",
+                       "field": "item"
+                   },
+                   {
+                       "title": "2018-12-31",
+                       "field": "2018-12-31"
+                   },
+                   {
+                       "title": "2017-12-31",
+                       "field": "2017-12-31"
+                   },
+                   {
+                       "title": "2016-12-31",
+                       "field": "2016-12-31"
+                   }
+               ],
+               "data": [
+                   {
+                       "item": "Net Income",
+                       "subtotal": true,
+                       "2018-12-31": "-8857",
+                       "2017-12-31": "-63509",
+                       "2016-12-31": "-42758"
+                   }
+               ]
+           }
+       },
+       "operating_activities": {
+           "title": "Operating Activities",
+           "table": {
+               "columns": [
+                   {
+                       "title": "item",
+                       "field": "item"
+                   },
+                   {
+                       "title": "2018-12-31",
+                       "field": "2018-12-31"
+                   },
+                   {
+                       "title": "2017-12-31",
+                       "field": "2017-12-31"
+                   },
+                   {
+                       "title": "2016-12-31",
+                       "field": "2016-12-31"
+                   }
+               ],
+               "data": [
+                   {
+                       "item": "Other Amortization",
+                       "subtotal": false,
+                       "2017-12-31": "1100",
+                       "2016-12-31": "1294"
+                   },
+                   {
+                       "item": "Depreciation & Amortization, Total",
+                       "subtotal": false,
+                       "2018-12-31": "8389",
+                       "2017-12-31": "4236",
+                       "2016-12-31": "4602"
+                   },
+                   {
+                       "item": "(Gain) Loss From Sale Of Asset",
+                       "subtotal": false,
+                       "2018-12-31": "8",
+                       "2017-12-31": "54",
+                       "2016-12-31": "29"
+                   },
+                   {
+                       "item": "(Gain) Loss On Sale Of Invest.",
+                       "subtotal": false,
+                       "2018-12-31": "-357"
+                   },
+                   {
+                       "item": "Asset Writedown & Restructuring Costs",
+                       "subtotal": false,
+                       "2018-12-31": "1472",
+                       "2017-12-31": "525",
+                       "2016-12-31": "4124"
+                   },
+                   {
+                       "item": "Stock-Based Compensation",
+                       "subtotal": false,
+                       "2018-12-31": "37674",
+                       "2017-12-31": "10953",
+                       "2016-12-31": "8206"
+                   },
+                   {
+                       "item": "Other Operating Activities",
+                       "subtotal": false,
+                       "2018-12-31": "342",
+                       "2017-12-31": "43455",
+                       "2016-12-31": "-773"
+                   },
+                   {
+                       "item": "Change In Accounts Receivable",
+                       "subtotal": false,
+                       "2018-12-31": "-50673",
+                       "2017-12-31": "-41184",
+                       "2016-12-31": "-26354"
+                   },
+                   {
+                       "item": "Change In Inventories",
+                       "subtotal": false,
+                       "2018-12-31": "-2953",
+                       "2017-12-31": "10828",
+                       "2016-12-31": "-13256"
+                   },
+                   {
+                       "item": "Change In Accounts Payable",
+                       "subtotal": false,
+                       "2018-12-31": "-98",
+                       "2017-12-31": "24315",
+                       "2016-12-31": "-2808"
+                   },
+                   {
+                       "item": "Change in Unearned Revenues",
+                       "subtotal": false,
+                       "2018-12-31": "10063",
+                       "2017-12-31": "29976",
+                       "2016-12-31": "19786"
+                   },
+                   {
+                       "item": "Change in Other Net Operating Assets",
+                       "subtotal": false,
+                       "2018-12-31": "18036",
+                       "2017-12-31": "16439",
+                       "2016-12-31": "15109"
+                   },
+                   {
+                       "item": "Cash from Operations",
+                       "subtotal": true,
+                       "2018-12-31": "13922",
+                       "2017-12-31": "37292",
+                       "2016-12-31": "-32463"
+                   },
+                   {
+                       "item": "Provision & Write-off of Bad debts",
+                       "subtotal": false,
+                       "2018-12-31": "876",
+                       "2017-12-31": "104",
+                       "2016-12-31": "336"
+                   }
+               ]
+           }
+       },
+       "investing_activities": {
+           "title": "Investing Activities",
+           "table": {
+               "columns": [
+                   {
+                       "title": "item",
+                       "field": "item"
+                   },
+                   {
+                       "title": "2018-12-31",
+                       "field": "2018-12-31"
+                   },
+                   {
+                       "title": "2017-12-31",
+                       "field": "2017-12-31"
+                   },
+                   {
+                       "title": "2016-12-31",
+                       "field": "2016-12-31"
+                   }
+               ],
+               "data": [
+                   {
+                       "item": "Capital Expenditure",
+                       "subtotal": false,
+                       "2018-12-31": "-18327",
+                       "2017-12-31": "-9229",
+                       "2016-12-31": "-8596"
+                   },
+                   {
+                       "item": "Other Investing Activities, Total",
+                       "subtotal": false,
+                       "2018-12-31": "-41806",
+                       "2017-12-31": "-80",
+                       "2016-12-31": "29"
+                   },
+                   {
+                       "item": "Cash from Investing",
+                       "subtotal": true,
+                       "2018-12-31": "-60133",
+                       "2017-12-31": "-12268",
+                       "2016-12-31": "-8567"
+                   },
+                   {
+                       "item": "Cash Acquisitions",
+                       "subtotal": false,
+                       "2017-12-31": "-2959"
+                   }
+               ]
+           }
+       },
+       "financing_activities": {
+           "title": "Financing Activities",
+           "table": {
+               "columns": [
+                   {
+                       "title": "item",
+                       "field": "item"
+                   },
+                   {
+                       "title": "2018-12-31",
+                       "field": "2018-12-31"
+                   },
+                   {
+                       "title": "2017-12-31",
+                       "field": "2017-12-31"
+                   },
+                   {
+                       "title": "2016-12-31",
+                       "field": "2016-12-31"
+                   }
+               ],
+               "data": [
+                   {
+                       "item": "Issuance of Common Stock",
+                       "subtotal": false,
+                       "2018-12-31": "25025",
+                       "2017-12-31": "136519",
+                       "2016-12-31": "438"
+                   },
+                   {
+                       "item": "Other Financing Activities, Total",
+                       "subtotal": false,
+                       "2018-12-31": "-500",
+                       "2017-12-31": "-3100",
+                       "2016-12-31": "-594"
+                   },
+                   {
+                       "item": "Cash from Financing",
+                       "subtotal": true,
+                       "2018-12-31": "24525",
+                       "2017-12-31": "117664",
+                       "2016-12-31": "-156"
+                   },
+                   {
+                       "item": "Net Change in Cash",
+                       "subtotal": true,
+                       "2018-12-31": "-21686",
+                       "2017-12-31": "142688",
+                       "2016-12-31": "-41186"
+                   },
+                   {
+                       "item": "Repurchase of Common Stock",
+                       "subtotal": false
+                   },
+                   {
+                       "item": "Total Debt Issued",
+                       "subtotal": false,
+                       "2017-12-31": "24691",
+                       "2016-12-31": "15000"
+                   },
+                   {
+                       "item": "Total Debt Repaid",
+                       "subtotal": false,
+                       "2017-12-31": "-40446",
+                       "2016-12-31": "-15000"
+                   }
+               ]
+           }
+       }
+   },
+   "quarterly": {
+       "period_ending": {
+           "title": "Period Ending",
+           "table": {
+               "columns": [
+                   {
+                       "title": "item",
+                       "field": "item"
+                   },
+                   {
+                       "title": "2018-09-30",
+                       "field": "2018-09-30"
+                   },
+                   {
+                       "title": "2018-06-30",
+                       "field": "2018-06-30"
+                   },
+                   {
+                       "title": "2018-03-31",
+                       "field": "2018-03-31"
+                   }
+               ],
+               "data": [
+                   {
+                       "item": "Net Income",
+                       "subtotal": true,
+                       "2018-12-31": "6778",
+                       "2018-09-30": "-9527",
+                       "2018-06-30": "526",
+                       "2018-03-31": "-6634"
+                   }
+               ]
+           }
+       },
+       "operating_activities": {
+           "title": "Operating Activities",
+           "table": {
+               "columns": [
+                   {
+                       "title": "item",
+                       "field": "item"
+                   },
+                   {
+                       "title": "2018-09-30",
+                       "field": "2018-09-30"
+                   },
+                   {
+                       "title": "2018-06-30",
+                       "field": "2018-06-30"
+                   },
+                   {
+                       "title": "2018-03-31",
+                       "field": "2018-03-31"
+                   }
+               ],
+               "data": [
+                   {
+                       "item": "Other Amortization",
+                       "subtotal": false
+                   },
+                   {
+                       "item": "Depreciation & Amortization, Total",
+                       "subtotal": false,
+                       "2018-12-31": "2565",
+                       "2018-09-30": "2218",
+                       "2018-06-30": "1950",
+                       "2018-03-31": "1656"
+                   },
+                   {
+                       "item": "(Gain) Loss From Sale Of Asset",
+                       "subtotal": false,
+                       "2018-12-31": "0",
+                       "2018-09-30": "8"
+                   },
+                   {
+                       "item": "(Gain) Loss On Sale Of Invest.",
+                       "subtotal": false,
+                       "2018-12-31": "-193",
+                       "2018-09-30": "-164"
+                   },
+                   {
+                       "item": "Asset Writedown & Restructuring Costs",
+                       "subtotal": false,
+                       "2018-12-31": "1022",
+                       "2018-09-30": "65",
+                       "2018-06-30": "256",
+                       "2018-03-31": "129"
+                   },
+                   {
+                       "item": "Stock-Based Compensation",
+                       "subtotal": false,
+                       "2018-12-31": "16437",
+                       "2018-09-30": "11499",
+                       "2018-06-30": "5309",
+                       "2018-03-31": "4429"
+                   },
+                   {
+                       "item": "Other Operating Activities",
+                       "subtotal": false,
+                       "2018-12-31": "126",
+                       "2018-09-30": "216"
+                   },
+                   {
+                       "item": "Change In Accounts Receivable",
+                       "subtotal": false,
+                       "2018-12-31": "-49304",
+                       "2018-09-30": "-10752",
+                       "2018-06-30": "-17603",
+                       "2018-03-31": "26986"
+                   },
+                   {
+                       "item": "Change In Inventories",
+                       "subtotal": false,
+                       "2018-12-31": "33218",
+                       "2018-09-30": "-29372",
+                       "2018-06-30": "-1369",
+                       "2018-03-31": "-5430"
+                   },
+                   {
+                       "item": "Change In Accounts Payable",
+                       "subtotal": false,
+                       "2018-12-31": "-17041",
+                       "2018-09-30": "35943",
+                       "2018-06-30": "-526",
+                       "2018-03-31": "-18474"
+                   },
+                   {
+                       "item": "Change in Unearned Revenues",
+                       "subtotal": false,
+                       "2018-12-31": "13117",
+                       "2018-09-30": "333",
+                       "2018-06-30": "4089",
+                       "2018-03-31": "-7476"
+                   },
+                   {
+                       "item": "Change in Other Net Operating Assets",
+                       "subtotal": false,
+                       "2018-12-31": "16373",
+                       "2018-09-30": "1235",
+                       "2018-06-30": "10452",
+                       "2018-03-31": "-10024"
+                   },
+                   {
+                       "item": "Cash from Operations",
+                       "subtotal": true,
+                       "2018-12-31": "23219",
+                       "2018-09-30": "2171",
+                       "2018-06-30": "3169",
+                       "2018-03-31": "-14637"
+                   },
+                   {
+                       "item": "Provision & Write-off of Bad debts",
+                       "subtotal": false,
+                       "2018-12-31": "121",
+                       "2018-09-30": "469",
+                       "2018-06-30": "85",
+                       "2018-03-31": "201"
+                   }
+               ]
+           }
+       },
+       "investing_activities": {
+           "title": "Investing Activities",
+           "table": {
+               "columns": [
+                   {
+                       "title": "item",
+                       "field": "item"
+                   },
+                   {
+                       "title": "2018-09-30",
+                       "field": "2018-09-30"
+                   },
+                   {
+                       "title": "2018-06-30",
+                       "field": "2018-06-30"
+                   },
+                   {
+                       "title": "2018-03-31",
+                       "field": "2018-03-31"
+                   }
+               ],
+               "data": [
+                   {
+                       "item": "Capital Expenditure",
+                       "subtotal": false,
+                       "2018-12-31": "-4964",
+                       "2018-09-30": "-4350",
+                       "2018-06-30": "-5606",
+                       "2018-03-31": "-3407"
+                   },
+                   {
+                       "item": "Other Investing Activities, Total",
+                       "subtotal": false,
+                       "2018-12-31": "94",
+                       "2018-09-30": "-41900"
+                   },
+                   {
+                       "item": "Cash from Investing",
+                       "subtotal": true,
+                       "2018-12-31": "-4870",
+                       "2018-09-30": "-46250",
+                       "2018-06-30": "-5606",
+                       "2018-03-31": "-3407"
+                   },
+                   {
+                       "item": "Cash Acquisitions",
+                       "subtotal": false
+                   }
+               ]
+           }
+       },
+       "financing_activities": {
+           "title": "Financing Activities",
+           "table": {
+               "columns": [
+                   {
+                       "title": "item",
+                       "field": "item"
+                   },
+                   {
+                       "title": "2018-09-30",
+                       "field": "2018-09-30"
+                   },
+                   {
+                       "title": "2018-06-30",
+                       "field": "2018-06-30"
+                   },
+                   {
+                       "title": "2018-03-31",
+                       "field": "2018-03-31"
+                   }
+               ],
+               "data": [
+                   {
+                       "item": "Issuance of Common Stock",
+                       "subtotal": false,
+                       "2018-09-30": "8082",
+                       "2018-06-30": "15854",
+                       "2018-03-31": "1544"
+                   },
+                   {
+                       "item": "Other Financing Activities, Total",
+                       "subtotal": false,
+                       "2018-12-31": "0",
+                       "2018-09-30": "-500"
+                   },
+                   {
+                       "item": "Cash from Financing",
+                       "subtotal": true,
+                       "2018-12-31": "-455",
+                       "2018-09-30": "7582",
+                       "2018-06-30": "15854",
+                       "2018-03-31": "1544"
+                   },
+                   {
+                       "item": "Net Change in Cash",
+                       "subtotal": true,
+                       "2018-12-31": "17894",
+                       "2018-09-30": "-36497",
+                       "2018-06-30": "13417",
+                       "2018-03-31": "-16500"
+                   },
+                   {
+                       "item": "Repurchase of Common Stock",
+                       "subtotal": false,
+                       "2018-12-31": "-455"
+                   },
+                   {
+                       "item": "Total Debt Issued",
+                       "subtotal": false
+                   },
+                   {
+                       "item": "Total Debt Repaid",
+                       "subtotal": false
+                   }
+               ]
+           }
+       }
+   }
+}

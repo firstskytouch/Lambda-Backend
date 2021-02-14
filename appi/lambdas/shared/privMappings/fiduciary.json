@@ -1,0 +1,13 @@
+{
+    "primaryKey": "fiduciaryId",
+    "PROF1": {
+        "type": "row",
+        "keys": [
+            "planName",
+            "planNumber",
+            "planType",
+            "participants",
+            "marketValue"
+        ]
+    }
+}

@@ -1,0 +1,154 @@
+Lambdas:
+
+  # AUTHORIZER
+
+  - name: apig-custom-authorizer
+    path: appi/lambdas/authorizers/apig-custom-authorizer
+
+  # COMPANIES API
+  
+  - name: companies-get
+    path: appi/lambdas/companies/get
+  - name: companies-_companyId-get
+    path: appi/lambdas/companies/_companyId/get
+  - name: companies-_companyId-details-get
+    path: appi/lambdas/companies/_companyId/details/get
+  - name: companies-_companyId-earnings-get
+    path: appi/lambdas/companies/_companyId/earnings/get
+  - name: companies-_companyId-estimations-get
+    path: appi/lambdas/companies/_companyId/estimations/get
+  - name: companies-_companyId-events-get
+    path: appi/lambdas/companies/_companyId/events/get
+
+  - name: companies-_companyId-financials-get
+    path: appi/lambdas/companies/_companyId/financials/get
+  - name: companies-_companyId-financials-income-get
+    path: appi/lambdas/companies/_companyId/financials/income/get
+  - name: companies-_companyId-financials-cash-get
+    path: appi/lambdas/companies/_companyId/financials/cash/get
+  - name: companies-_companyId-financials-balance-get
+    path: appi/lambdas/companies/_companyId/financials/balance/get
+  - name: companies-_companyId-financials-debt-get
+    path: appi/lambdas/companies/_companyId/financials/debt/get
+
+  - name: companies-_companyId-holders-get
+    path: appi/lambdas/companies/_companyId/holders/get
+  - name: companies-_companyId-holders-direct-get
+    path: appi/lambdas/companies/_companyId/holders/direct/get
+  - name: companies-_companyId-holders-transaction-get
+    path: appi/lambdas/companies/_companyId/holders/transaction/get
+  - name: companies-_companyId-holders-institution-get
+    path: appi/lambdas/companies/_companyId/holders/institution/get
+
+  - name: companies-_companyId-attachments-get
+    path: appi/lambdas/companies/_companyId/attachments/get
+  - name: companies-_companyId-programs-get
+    path: appi/lambdas/companies/_companyId/programs/get
+  - name: companies-_companyId-programs-post
+    path: appi/lambdas/companies/_companyId/programs/post
+  - name: companies-_companyId-programs-_programId-put
+    path: appi/lambdas/companies/_companyId/programs/_programId/put
+
+  - name: companies-_companyId-predictors-get
+    path: appi/lambdas/companies/_companyId/predictors/get
+  - name: companies-_companyId-stats-get
+    path: appi/lambdas/companies/_companyId/stats/get
+  - name: companies-_companyId-ratios-get
+    path: appi/lambdas/companies/_companyId/ratios/get
+  - name: companies-_companyId-risks-get
+    path: appi/lambdas/companies/_companyId/risks/get
+  - name: companies-_companyId-tradings-get
+    path: appi/lambdas/companies/_companyId/tradings/get
+
+  - name: companies-_companyId-stocks-get
+    path: appi/lambdas/companies/_companyId/stocks/get
+  - name: companies-_companyId-stocks-variations-get
+    path: appi/lambdas/companies/_companyId/stocks/variations/get
+
+  - name: companies-_companyId-documents-get
+    path: appi/lambdas/companies/_companyId/documents/get
+  - name: companies-_companyId-documents-_documentId-get
+    path: appi/lambdas/companies/_companyId/documents/_documentId/get
+
+  # USERS API
+
+  - name: users-get
+    path: appi/lambdas/users/get
+  - name: users-post
+    path: appi/lambdas/users/post
+  - name: users-_userId-get
+    path: appi/lambdas/users/_userId/get
+  - name: users-_userId-put
+    path: appi/lambdas/users/_userId/put
+
+  - name: users-_userId-worksheets-get
+    path: appi/lambdas/users/_userId/worksheets/get
+  - name: users-_userId-worksheets-post
+    path: appi/lambdas/users/_userId/worksheets/post
+
+  - name: users-_userId-worksheets-_worksheetId-get
+    path: appi/lambdas/users/_userId/worksheets/_worksheetId/get
+  - name: users-_userId-worksheets-_worksheetId-put
+    path: appi/lambdas/users/_userId/worksheets/_worksheetId/put
+  - name: users-_userId-worksheets-_worksheetId-delete
+    path: appi/lambdas/users/_userId/worksheets/_worksheetId/delete
+  - name: users-_userId-worksheets-_worksheetId-pdf-post
+    path: appi/lambdas/users/_userId/worksheets/_worksheetId/pdf/post
+  - name: users-_userId-worksheets-_worksheetId-ir-post
+    path: appi/lambdas/users/_userId/worksheets/_worksheetId/imageright/post
+
+  # OTHER API
+
+  - name: industries-get
+    path: appi/lambdas/industries/get
+  - name: documents-get
+    path: appi/lambdas/documents/get
+  - name: snp-chrome-ext-post
+    path: appi/lambdas/snp-chrome-ext/post
+
+  # WARMUP
+
+  - name: warmup-apis
+    path: appi/lambdas/warmup
+
+  # STREAM TRIGGERS
+
+  - name: worksheets-stream-trigger
+    path: appi/lambdas/triggers/worksheets
+  - name: programs-stream-trigger
+    path: appi/lambdas/triggers/programs
+
+  # STEP FUNCTION WORKFLOWS
+
+  - name: imageright-check-file
+    path: appi/lambdas/workflows/imageright-upload/check-file
+  - name: imageright-submit-upload
+    path: appi/lambdas/workflows/imageright-upload/submit-upload
+  - name: imageright-check-status
+    path: appi/lambdas/workflows/imageright-upload/check-status
+  - name: imageright-update-worksheet
+    path: appi/lambdas/workflows/imageright-upload/update-worksheet
+
+  # STEP FUNCTION WORKFLOWS
+  - name: private-get
+    path: appi/lambdas/private/get
+  - name: private-_companyId-get
+    path: appi/lambdas/private/_privateId/get
+  - name: private-post
+    path: appi/lambdas/private/post
+  - name: private-_companyId-submission-post
+    path: appi/lambdas/private/_privateId/submission/post
+  - name: private-_companyId-submission-get
+    path: appi/lambdas/private/_privateId/submission/get
+  - name: private-_companyId-employment-get
+    path: appi/lambdas/private/_privateId/employment/get
+  - name: private-_companyId-fiduciary-get
+    path: appi/lambdas/private/_privateId/fiduciary/get
+  - name: private-_companyId-ownership-get
+    path: appi/lambdas/private/_privateId/ownership/get
+  - name: private-_companyId-balance-get
+    path: appi/lambdas/private/_privateId/balance/get
+  - name: private-_companyId-cash-get
+    path: appi/lambdas/private/_privateId/cash/get
+  - name: private-_companyId-income-get
+    path: appi/lambdas/private/_privateId/income/get

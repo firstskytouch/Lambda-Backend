@@ -1,0 +1,20 @@
+{
+    "primaryKey": "compensationId",
+    "PROE10": {
+        "convert": [
+            {
+                "index": 0,
+                "table": "compensationDataItem",
+                "from": "compensationDataItemId",
+                "to": "compensationDataItemName"
+            }
+        ],
+        "type": "dynamicTable",
+        "keys": [
+            "compensationDataItemName",
+            "employeeCt"
+        ]
+    },
+    "PROE13": "employeeCtType",
+    "required": ["employeeCt"]
+}

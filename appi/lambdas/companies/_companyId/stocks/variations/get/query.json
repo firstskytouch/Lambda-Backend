@@ -1,0 +1,11 @@
+{
+  "queries": [
+  	  "select priceClose as value, pricingDate as date from api_schema.Companies_StockChart where pricelow is not null ORDER BY pricingDate desc;",
+  	  "select distinct since, category from api_schema.Events where symbolvalue is not null order by since desc;"
+  ],
+  "query_predicate_name": "symbolValue",
+  "metadata": {
+  }
+}
+
+

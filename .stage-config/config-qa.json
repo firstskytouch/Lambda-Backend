@@ -1,0 +1,27 @@
+{
+  "Parameters" : {
+    "StackName" :                 "appi",
+    "TemplatePath" :              "TEMPLATE_PATH_PLACEHOLDER",
+    "EnvironmentType" :           "qa",
+    "IssuerName" :                "/okta/qa/issuer",
+    "ClientId" :                  "/okta/qa/cid",
+    "ElasticSearchDomain" :       "/appi/data/es/domain",
+    "SECS3Bucket" :               "/s3/qa/buckets/sec",
+    "SCAS3Bucket" :               "/s3/qa/buckets/sca-pdf",
+    "Drawer" :                    "/imageright/qa/drawer",
+    "Folder" :                    "/imageright/qa/folder",
+    "IrEndpoint" :                "/imageright/qa/endpoint",
+    "IrAuthKey" :                 "/imageright/qa/authkey",
+    "VpcId" :                     "/vpc/id",
+    "VpcDefaultSecurityGroup" :   "/vpc/securitygroup/default",
+    "VpcPrivateSubnets" :         "/vpc/subnets/private",
+    "VpcPublicSubnets" :          "/vpc/subnets/public",
+    "CAPIAPIDomain":              "qa.companies.argo-digital.com",
+    "CAPISecrets":                "qa-appi-company-api-secrets"
+  },
+  "Tags" : {
+    "argo:product:name" : "APPI",
+    "argo:product:function" : "backend",
+    "argo:product:stage" : "qa"
+  }
+}

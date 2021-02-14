@@ -1,0 +1,9 @@
+{
+  "queries": [
+  	"select section, calendaryear, calendarquarter, value from api_schema.Companies_EPS_Estimate_Chart_Actual where symbolvalue is not null order by calendaryear, calendarquarter asc;",
+  	"select section, calendaryear, calendarquarter, value from api_schema.Companies_EPS_Estimate_Chart_Estimate where symbolvalue is not null order by calendaryear, calendarquarter asc;"
+  ],
+  "query_predicate_name": "symbolValue",
+  "metadata": {
+  }
+}

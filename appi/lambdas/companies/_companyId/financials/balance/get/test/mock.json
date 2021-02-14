@@ -1,0 +1,988 @@
+[
+    [
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Cash And Equivalents",
+            "table": "assets",
+            "value": "5645.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Short Term Investments",
+            "table": "assets",
+            "value": "6303.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Total Cash And Short Term Investments",
+            "table": "assets",
+            "value": "11948.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Total Receivables",
+            "table": "assets",
+            "value": "3852.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Inventory",
+            "table": "assets",
+            "value": "3178.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Prepaid Expenses",
+            "table": "assets",
+            "value": "2848.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Other Current Assets, Total",
+            "table": "assets",
+            "value": "6714.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Total Current Assets",
+            "table": "assets",
+            "value": "28540.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Net Property Plant And Equipment",
+            "table": "assets",
+            "value": "10108.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Long-term Investments",
+            "table": "assets",
+            "value": "21767.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Goodwill",
+            "table": "assets",
+            "value": "12964.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Other Intangibles",
+            "table": "assets",
+            "value": "9780.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Other Assets, Total",
+            "table": "assets",
+            "value": "5188.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Total Assets",
+            "table": "assets",
+            "value": "88347.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Accounts Payable",
+            "table": "liabilities",
+            "value": "10669.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Short-term Borrowings",
+            "table": "liabilities",
+            "value": "11570.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Current Portion of Long Term Debt/Capital Leases",
+            "table": "liabilities",
+            "value": "3548.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Other Current Liabilities, Total",
+            "table": "liabilities",
+            "value": "2156.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Total Current Liabilities",
+            "table": "liabilities",
+            "value": "27943.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Long Term Debt",
+            "table": "liabilities",
+            "value": "30445.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Other Liabilities, Total",
+            "table": "liabilities",
+            "value": "10155.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Total Liabilities",
+            "table": "liabilities",
+            "value": "68543.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Common Stock",
+            "table": "stockholder_equity",
+            "value": "1760.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Additional Paid In Capital",
+            "table": "stockholder_equity",
+            "value": "16577.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Retained Earnings",
+            "table": "stockholder_equity",
+            "value": "63704.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Treasury Stock & Other",
+            "table": "stockholder_equity",
+            "value": "-64306.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Total Common Equity",
+            "table": "stockholder_equity",
+            "value": "17735.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Minority Interest",
+            "table": "stockholder_equity",
+            "value": "2069.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Total Equity",
+            "table": "stockholder_equity",
+            "value": "19804.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2019-03-29T00:00:00.000Z",
+            "periodtypename": "Quarterly",
+            "item": "Total Liabilities And Equity",
+            "table": "stockholder_equity",
+            "value": "88347.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Cash And Equivalents",
+            "table": "assets",
+            "value": "8926.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Short Term Investments",
+            "table": "assets",
+            "value": "7038.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Cash And Short Term Investments",
+            "table": "assets",
+            "value": "15964.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Receivables",
+            "table": "assets",
+            "value": "3396.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Inventory",
+            "table": "assets",
+            "value": "2766.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Prepaid Expenses",
+            "table": "assets",
+            "value": "1849.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Other Current Assets, Total",
+            "table": "assets",
+            "value": "6659.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Current Assets",
+            "table": "assets",
+            "value": "30634.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Net Property Plant And Equipment",
+            "table": "assets",
+            "value": "8232.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Long-term Investments",
+            "table": "assets",
+            "value": "21533.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Goodwill",
+            "table": "assets",
+            "value": "10263.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Other Intangibles",
+            "table": "assets",
+            "value": "7007.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Other Assets, Total",
+            "table": "assets",
+            "value": "5547.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Assets",
+            "table": "assets",
+            "value": "83216.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Accounts Payable",
+            "table": "liabilities",
+            "value": "2498.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Accrued Expenses",
+            "table": "liabilities",
+            "value": "6348.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Short-term Borrowings",
+            "table": "liabilities",
+            "value": "13194.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Current Portion of Long Term Debt/Capital Leases",
+            "table": "liabilities",
+            "value": "4997.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Other Current Liabilities, Total",
+            "table": "liabilities",
+            "value": "2186.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Current Liabilities",
+            "table": "liabilities",
+            "value": "29223.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Long Term Debt",
+            "table": "liabilities",
+            "value": "25404.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Other Liabilities, Total",
+            "table": "liabilities",
+            "value": "9531.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Liabilities",
+            "table": "liabilities",
+            "value": "64158.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Common Stock",
+            "table": "stockholder_equity",
+            "value": "1760.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Additional Paid In Capital",
+            "table": "stockholder_equity",
+            "value": "16520.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Retained Earnings",
+            "table": "stockholder_equity",
+            "value": "63234.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Treasury Stock & Other",
+            "table": "stockholder_equity",
+            "value": "-64533.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Common Equity",
+            "table": "stockholder_equity",
+            "value": "16981.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Minority Interest",
+            "table": "stockholder_equity",
+            "value": "2077.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Equity",
+            "table": "stockholder_equity",
+            "value": "19058.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2018-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Liabilities And Equity",
+            "table": "stockholder_equity",
+            "value": "83216.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Cash And Equivalents",
+            "table": "assets",
+            "value": "6006.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Short Term Investments",
+            "table": "assets",
+            "value": "14669.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Cash And Short Term Investments",
+            "table": "assets",
+            "value": "20675.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Receivables",
+            "table": "assets",
+            "value": "3667.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Inventory",
+            "table": "assets",
+            "value": "2655.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Prepaid Expenses",
+            "table": "assets",
+            "value": "1902.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Other Current Assets, Total",
+            "table": "assets",
+            "value": "7646.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Current Assets",
+            "table": "assets",
+            "value": "36545.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Net Property Plant And Equipment",
+            "table": "assets",
+            "value": "8203.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Long-term Investments",
+            "table": "assets",
+            "value": "23281.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Goodwill",
+            "table": "assets",
+            "value": "9401.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Other Intangibles",
+            "table": "assets",
+            "value": "7235.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Other Assets, Total",
+            "table": "assets",
+            "value": "3231.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Assets",
+            "table": "assets",
+            "value": "87896.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Accounts Payable",
+            "table": "liabilities",
+            "value": "2288.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Accrued Expenses",
+            "table": "liabilities",
+            "value": "6380.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Short-term Borrowings",
+            "table": "liabilities",
+            "value": "13205.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Current Portion of Long Term Debt/Capital Leases",
+            "table": "liabilities",
+            "value": "3298.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Other Current Liabilities, Total",
+            "table": "liabilities",
+            "value": "2023.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Current Liabilities",
+            "table": "liabilities",
+            "value": "27194.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Long Term Debt",
+            "table": "liabilities",
+            "value": "31221.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Other Liabilities, Total",
+            "table": "liabilities",
+            "value": "10504.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Liabilities",
+            "table": "liabilities",
+            "value": "68919.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Common Stock",
+            "table": "stockholder_equity",
+            "value": "1760.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Additional Paid In Capital",
+            "table": "stockholder_equity",
+            "value": "15864.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Retained Earnings",
+            "table": "stockholder_equity",
+            "value": "60430.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Treasury Stock & Other",
+            "table": "stockholder_equity",
+            "value": "-60982.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Common Equity",
+            "table": "stockholder_equity",
+            "value": "17072.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Minority Interest",
+            "table": "stockholder_equity",
+            "value": "1905.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Equity",
+            "table": "stockholder_equity",
+            "value": "18977.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2017-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Liabilities And Equity",
+            "table": "stockholder_equity",
+            "value": "87896.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Cash And Equivalents",
+            "table": "assets",
+            "value": "8555.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Short Term Investments",
+            "table": "assets",
+            "value": "13646.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Cash And Short Term Investments",
+            "table": "assets",
+            "value": "22201.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Receivables",
+            "table": "assets",
+            "value": "3856.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Inventory",
+            "table": "assets",
+            "value": "2675.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Prepaid Expenses",
+            "table": "assets",
+            "value": "1686.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Other Current Assets, Total",
+            "table": "assets",
+            "value": "3592.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Current Assets",
+            "table": "assets",
+            "value": "34010.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Net Property Plant And Equipment",
+            "table": "assets",
+            "value": "10635.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Long-term Investments",
+            "table": "assets",
+            "value": "18569.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Goodwill",
+            "table": "assets",
+            "value": "10629.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Other Intangibles",
+            "table": "assets",
+            "value": "10499.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Other Assets, Total",
+            "table": "assets",
+            "value": "2928.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Assets",
+            "table": "assets",
+            "value": "87270.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Accounts Payable",
+            "table": "liabilities",
+            "value": "2682.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Accrued Expenses",
+            "table": "liabilities",
+            "value": "6008.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Short-term Borrowings",
+            "table": "liabilities",
+            "value": "12498.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Current Portion of Long Term Debt/Capital Leases",
+            "table": "liabilities",
+            "value": "3527.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Other Current Liabilities, Total",
+            "table": "liabilities",
+            "value": "1817.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Current Liabilities",
+            "table": "liabilities",
+            "value": "26532.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Long Term Debt",
+            "table": "liabilities",
+            "value": "29732.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Other Liabilities, Total",
+            "table": "liabilities",
+            "value": "7786.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Liabilities",
+            "table": "liabilities",
+            "value": "64050.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Common Stock",
+            "table": "stockholder_equity",
+            "value": "1760.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Additional Paid In Capital",
+            "table": "stockholder_equity",
+            "value": "14993.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Retained Earnings",
+            "table": "stockholder_equity",
+            "value": "65502.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Treasury Stock & Other",
+            "table": "stockholder_equity",
+            "value": "-59193.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Common Equity",
+            "table": "stockholder_equity",
+            "value": "23062.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Minority Interest",
+            "table": "stockholder_equity",
+            "value": "158.000000",
+            "subtotal_line": ""
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Equity",
+            "table": "stockholder_equity",
+            "value": "23220.000000",
+            "subtotal_line": "Y"
+        },
+        {
+            "periodenddate": "2016-12-31T00:00:00.000Z",
+            "periodtypename": "Annual",
+            "item": "Total Liabilities And Equity",
+            "table": "stockholder_equity",
+            "value": "87270.000000",
+            "subtotal_line": "Y"
+        }
+    ]
+]

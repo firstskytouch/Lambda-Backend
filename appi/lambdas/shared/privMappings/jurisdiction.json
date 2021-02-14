@@ -1,0 +1,20 @@
+{
+    "primaryKey": "jurisdictionId",
+    "PROE9": {
+        "convert": [
+            {
+                "index": 0,
+                "table": "state",
+                "from": "stateId",
+                "to": "abbreviation"
+            }
+        ],
+        "type": "dynamicTable",
+        "keys": [
+            "abbreviation",
+            "employeeCt"
+        ]
+    },
+    "PROE12": "employeeCtType",
+    "required": ["stateId"]
+}

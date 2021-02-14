@@ -1,0 +1,28 @@
+{
+  "query_old": "SELECT central_index_key, COUNT(item_1_03) as bankruptcy_or_receivership, COUNT(item_4_01) as change_in_registrant_acc, COUNT(item_5_02) as change_in_do FROM sec WHERE (item_1_03 is not null OR item_4_01 is not null OR item_5_02 is not null) AND conformed_period_of_report >= CURRENT_DATE - INTERVAL '13 months' GROUP BY central_index_key;",
+  "query_old_2": "SELECT central_index_key, COUNT(item_1_03) as bankruptcy_or_receivership, COUNT(item_4_01) as change_in_registrant_acc, COUNT(item_5_02) as change_in_do, COUNT(outstanding_litigation) as outstanding_litigation, COUNT(accounting_restatements) as accounting_restatements, COUNT(pollution_liability) as pollution_liability, COUNT(merger_and_acquisition) as merger_and_acquisition, COUNT(provision_for_credit_losses) as provision_for_credit_losses, COUNT(derivative_hedge_accounting) as derivative_hedge_accounting, COUNT(pension_benefits) as pension_benefits, COUNT(revenue_expense_recognition) as revenue_expense_recognition, COUNT(stock_based_compensation) as stock_based_compensation, COUNT(reserving_for_loans_lease_losses) as reserving_for_loans_lease_losses, COUNT(compliance_with_debt_covenant) as compliance_with_debt_covenant FROM sec WHERE (item_1_03 is not null OR item_4_01 is not null OR item_5_02 is not null OR outstanding_litigation = 'true' OR accounting_restatements = 'true' OR pollution_liability = 'true' OR merger_and_acquisition = 'true' OR provision_for_credit_losses = 'true' OR derivative_hedge_accounting = 'true' OR pension_benefits = 'true' OR revenue_expense_recognition = 'true' OR stock_based_compensation = 'true' OR reserving_for_loans_lease_losses = 'true' OR compliance_with_debt_covenant = 'true') AND conformed_period_of_report >= CURRENT_DATE - INTERVAL '13 months' GROUP BY central_index_key;",
+  "queries": [
+    "select * FROM sec_schema.sec where ((item_1_03 is not null AND item_1_03 != '') OR (item_4_01 is not null AND item_4_01 != '') OR (item_5_02 is not null AND item_5_02 != '') OR ri_chg_acctg_principle = 'true' OR ri_chg_rev_recognition = 'true' OR ri_debt_covenant = 'true' OR ri_env_liabilities = 'true' OR ri_fin_restatements = 'true' OR ri_going_concern = 'true' OR ri_goodwill_impairment = 'true' OR ri_level3_assets = 'true' OR ri_litigation = 'True' OR ri_material_weakness = 'true' OR ri_pensions = 'true' OR ri_related_parties = 'true' OR ri_restructuring = 'true' OR ri_securitization_factoring = 'true' OR ri_write_offs = 'true') AND conformed_period_of_report >= CURRENT_DATE - INTERVAL '13 months'"
+  ],
+  "query_predicate_name": "central_index_key",
+  "metadata": {
+    "bankruptcy_or_receivership" : "Bankruptcy or Receivership",
+    "change_in_registrant_acc" : "Changes in Registrant's Certifying Accountant",
+    "change_in_do" : "Changes in D&O",
+    "ri_chg_acctg_principle" : "Change in Accounting Principles",
+    "ri_chg_rev_recognition" : "Change in Revenue Recognition",
+    "ri_debt_covenant" : "Debt Covenant Violations",
+    "ri_env_liabilities" : "Environmental Remediation Liabilities",
+    "ri_fin_restatements" : "Financial Restatements",
+    "ri_going_concern" : "Going Concern Warning",
+    "ri_goodwill_impairment" : "Goodwill Impairment",
+    "ri_level3_assets" : "Level 3 Assets",
+    "ri_litigation" : "Pending Litigation",
+    "ri_material_weakness" : "Material Weaknesses",
+    "ri_pensions" : "Underfunded Pensions Plans",
+    "ri_related_parties" : "Related Party Transactions",
+    "ri_restructuring" : "Restructuring Activities",
+    "ri_securitization_factoring" : "Securitization & Factoring",
+    "ri_write_offs" : "Write-Offs"
+  }
+}

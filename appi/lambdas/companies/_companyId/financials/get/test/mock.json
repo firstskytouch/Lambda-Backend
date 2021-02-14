@@ -1,0 +1,107 @@
+[[
+    {
+        "tab": "Annual",
+        "section": "net_income",
+        "x": "2018",
+        "y": "18045.000000"
+    }
+    ,
+    {
+        "tab": "Annual",
+        "section": "revenue",
+        "x": "2018",
+        "y": "65500.000000"
+    }
+    ,
+    {
+        "tab": "Annual",
+        "section": "revenue",
+        "x": "2017",
+        "y": "65272.000000"
+    }
+    ,
+    {
+        "tab": "Annual",
+        "section": "net_income",
+        "x": "2017",
+        "y": "-6798.000000"
+    }
+    ,
+    {
+        "tab": "Annual",
+        "section": "net_income",
+        "x": "2016",
+        "y": "14912.000000"
+    }
+    ,
+    {
+        "tab": "Annual",
+        "section": "revenue",
+        "x": "2016",
+        "y": "64048.000000"
+    }
+    ],[
+    {
+        "tab": "Quarterly",
+        "section": "revenue",
+        "fiscalyear": "2019",
+        "x": "1",
+        "y": "16632.000000"
+    }
+    ,
+    {
+        "tab": "Quarterly",
+        "section": "net_income",
+        "fiscalyear": "2019",
+        "x": "1",
+        "y": "4710.000000"
+    }
+    ,
+    {
+        "tab": "Quarterly",
+        "section": "net_income",
+        "fiscalyear": "2018",
+        "x": "4",
+        "y": "4313.000000"
+    }
+    ,
+    {
+        "tab": "Quarterly",
+        "section": "revenue",
+        "fiscalyear": "2018",
+        "x": "4",
+        "y": "15274.000000"
+    }
+    ,
+    {
+        "tab": "Quarterly",
+        "section": "revenue",
+        "fiscalyear": "2018",
+        "x": "3",
+        "y": "16483.000000"
+    }
+    ,
+    {
+        "tab": "Quarterly",
+        "section": "net_income",
+        "fiscalyear": "2018",
+        "x": "3",
+        "y": "4622.000000"
+    }
+    ,
+    {
+        "tab": "Quarterly",
+        "section": "revenue",
+        "fiscalyear": "2018",
+        "x": "2",
+        "y": "16674.000000"
+    }
+    ,
+    {
+        "tab": "Quarterly",
+        "section": "net_income",
+        "fiscalyear": "2018",
+        "x": "2",
+        "y": "4490.000000"
+    }
+    ]]

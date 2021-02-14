@@ -1,0 +1,1279 @@
+[[
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Issuance of Common Stock",
+        "table": "financing_activities",
+        "value": "25.025000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Repurchase of Common Stock",
+        "table": "financing_activities",
+        "value": "-0.455000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Other Financing Activities, Total",
+        "table": "financing_activities",
+        "value": "0.000000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Other Financing Activities, Total",
+        "table": "financing_activities",
+        "value": "-0.500000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Cash from Financing",
+        "table": "financing_activities",
+        "value": "-0.455000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Cash from Financing",
+        "table": "financing_activities",
+        "value": "24.525000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Net Change in Cash",
+        "table": "financing_activities",
+        "value": "-21.686000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Net Change in Cash",
+        "table": "financing_activities",
+        "value": "17.894000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Capital Expenditure",
+        "table": "investing_activities",
+        "value": "-18.327000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Capital Expenditure",
+        "table": "investing_activities",
+        "value": "-4.964000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Other Investing Activities, Total",
+        "table": "investing_activities",
+        "value": "0.094000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Other Investing Activities, Total",
+        "table": "investing_activities",
+        "value": "-41.806000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Cash from Investing",
+        "table": "investing_activities",
+        "value": "-60.133000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Cash from Investing",
+        "table": "investing_activities",
+        "value": "-4.870000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Depreciation & Amortization, Total",
+        "table": "operating_activities",
+        "value": "2.565000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Depreciation & Amortization, Total",
+        "table": "operating_activities",
+        "value": "8.389000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "(Gain) Loss From Sale Of Asset",
+        "table": "operating_activities",
+        "value": "0.000000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "(Gain) Loss From Sale Of Asset",
+        "table": "operating_activities",
+        "value": "0.008000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "(Gain) Loss On Sale Of Invest.",
+        "table": "operating_activities",
+        "value": "-0.193000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "(Gain) Loss On Sale Of Invest.",
+        "table": "operating_activities",
+        "value": "-0.357000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Asset Writedown & Restructuring Costs",
+        "table": "operating_activities",
+        "value": "1.022000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Asset Writedown & Restructuring Costs",
+        "table": "operating_activities",
+        "value": "1.472000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Stock-Based Compensation",
+        "table": "operating_activities",
+        "value": "37.674000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Stock-Based Compensation",
+        "table": "operating_activities",
+        "value": "16.437000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Provision & Write-off of Bad debts",
+        "table": "operating_activities",
+        "value": "0.121000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Provision & Write-off of Bad debts",
+        "table": "operating_activities",
+        "value": "0.876000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Other Operating Activities",
+        "table": "operating_activities",
+        "value": "0.342000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Other Operating Activities",
+        "table": "operating_activities",
+        "value": "0.126000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Change In Accounts Receivable",
+        "table": "operating_activities",
+        "value": "-50.673000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Change In Accounts Receivable",
+        "table": "operating_activities",
+        "value": "-49.304000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Change In Inventories",
+        "table": "operating_activities",
+        "value": "33.218000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Change In Inventories",
+        "table": "operating_activities",
+        "value": "-2.953000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Change In Accounts Payable",
+        "table": "operating_activities",
+        "value": "-17.041000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Change In Accounts Payable",
+        "table": "operating_activities",
+        "value": "-0.098000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Change in Unearned Revenues",
+        "table": "operating_activities",
+        "value": "13.117000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Change in Unearned Revenues",
+        "table": "operating_activities",
+        "value": "10.063000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Change in Other Net Operating Assets",
+        "table": "operating_activities",
+        "value": "18.036000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Change in Other Net Operating Assets",
+        "table": "operating_activities",
+        "value": "16.373000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Cash from Operations",
+        "table": "operating_activities",
+        "value": "13.922000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Cash from Operations",
+        "table": "operating_activities",
+        "value": "23.219000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Net Income",
+        "table": "period_ending",
+        "value": "-8.857000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2018-12-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Net Income",
+        "table": "period_ending",
+        "value": "6.778000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2018-09-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Issuance of Common Stock",
+        "table": "financing_activities",
+        "value": "8.082000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-09-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Other Financing Activities, Total",
+        "table": "financing_activities",
+        "value": "-0.500000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-09-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Cash from Financing",
+        "table": "financing_activities",
+        "value": "7.582000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2018-09-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Net Change in Cash",
+        "table": "financing_activities",
+        "value": "-36.497000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2018-09-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Capital Expenditure",
+        "table": "investing_activities",
+        "value": "-4.350000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-09-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Other Investing Activities, Total",
+        "table": "investing_activities",
+        "value": "-41.900000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-09-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Cash from Investing",
+        "table": "investing_activities",
+        "value": "-46.250000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2018-09-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Depreciation & Amortization, Total",
+        "table": "operating_activities",
+        "value": "2.218000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-09-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "(Gain) Loss From Sale Of Asset",
+        "table": "operating_activities",
+        "value": "0.008000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-09-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "(Gain) Loss On Sale Of Invest.",
+        "table": "operating_activities",
+        "value": "-0.164000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-09-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Asset Writedown & Restructuring Costs",
+        "table": "operating_activities",
+        "value": "0.065000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-09-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Stock-Based Compensation",
+        "table": "operating_activities",
+        "value": "11.499000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-09-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Provision & Write-off of Bad debts",
+        "table": "operating_activities",
+        "value": "0.469000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-09-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Other Operating Activities",
+        "table": "operating_activities",
+        "value": "0.216000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-09-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Change In Accounts Receivable",
+        "table": "operating_activities",
+        "value": "-10.752000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-09-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Change In Inventories",
+        "table": "operating_activities",
+        "value": "-29.372000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-09-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Change In Accounts Payable",
+        "table": "operating_activities",
+        "value": "35.943000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-09-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Change in Unearned Revenues",
+        "table": "operating_activities",
+        "value": "0.333000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-09-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Change in Other Net Operating Assets",
+        "table": "operating_activities",
+        "value": "1.235000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-09-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Cash from Operations",
+        "table": "operating_activities",
+        "value": "2.171000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2018-09-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Net Income",
+        "table": "period_ending",
+        "value": "-9.527000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2018-06-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Issuance of Common Stock",
+        "table": "financing_activities",
+        "value": "15.854000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-06-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Cash from Financing",
+        "table": "financing_activities",
+        "value": "15.854000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2018-06-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Net Change in Cash",
+        "table": "financing_activities",
+        "value": "13.417000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2018-06-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Capital Expenditure",
+        "table": "investing_activities",
+        "value": "-5.606000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-06-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Cash from Investing",
+        "table": "investing_activities",
+        "value": "-5.606000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2018-06-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Depreciation & Amortization, Total",
+        "table": "operating_activities",
+        "value": "1.950000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-06-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Asset Writedown & Restructuring Costs",
+        "table": "operating_activities",
+        "value": "0.256000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-06-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Stock-Based Compensation",
+        "table": "operating_activities",
+        "value": "5.309000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-06-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Provision & Write-off of Bad debts",
+        "table": "operating_activities",
+        "value": "0.085000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-06-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Change In Accounts Receivable",
+        "table": "operating_activities",
+        "value": "-17.603000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-06-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Change In Inventories",
+        "table": "operating_activities",
+        "value": "-1.369000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-06-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Change In Accounts Payable",
+        "table": "operating_activities",
+        "value": "-0.526000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-06-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Change in Unearned Revenues",
+        "table": "operating_activities",
+        "value": "4.089000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-06-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Change in Other Net Operating Assets",
+        "table": "operating_activities",
+        "value": "10.452000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-06-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Cash from Operations",
+        "table": "operating_activities",
+        "value": "3.169000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2018-06-30T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Net Income",
+        "table": "period_ending",
+        "value": "0.526000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2018-03-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Issuance of Common Stock",
+        "table": "financing_activities",
+        "value": "1.544000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-03-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Cash from Financing",
+        "table": "financing_activities",
+        "value": "1.544000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2018-03-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Net Change in Cash",
+        "table": "financing_activities",
+        "value": "-16.500000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2018-03-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Capital Expenditure",
+        "table": "investing_activities",
+        "value": "-3.407000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-03-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Cash from Investing",
+        "table": "investing_activities",
+        "value": "-3.407000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2018-03-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Depreciation & Amortization, Total",
+        "table": "operating_activities",
+        "value": "1.656000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-03-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Asset Writedown & Restructuring Costs",
+        "table": "operating_activities",
+        "value": "0.129000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-03-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Stock-Based Compensation",
+        "table": "operating_activities",
+        "value": "4.429000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-03-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Provision & Write-off of Bad debts",
+        "table": "operating_activities",
+        "value": "0.201000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-03-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Change In Accounts Receivable",
+        "table": "operating_activities",
+        "value": "26.986000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-03-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Change In Inventories",
+        "table": "operating_activities",
+        "value": "-5.430000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-03-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Change In Accounts Payable",
+        "table": "operating_activities",
+        "value": "-18.474000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-03-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Change in Unearned Revenues",
+        "table": "operating_activities",
+        "value": "-7.476000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-03-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Change in Other Net Operating Assets",
+        "table": "operating_activities",
+        "value": "-10.024000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2018-03-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Cash from Operations",
+        "table": "operating_activities",
+        "value": "-14.637000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2018-03-31T00:00:00.000Z",
+        "periodtypename": "Quarterly",
+        "item": "Net Income",
+        "table": "period_ending",
+        "value": "-6.634000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2017-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Total Debt Issued",
+        "table": "financing_activities",
+        "value": "24.691000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2017-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Total Debt Repaid",
+        "table": "financing_activities",
+        "value": "-40.446000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2017-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Issuance of Common Stock",
+        "table": "financing_activities",
+        "value": "136.519000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2017-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Other Financing Activities, Total",
+        "table": "financing_activities",
+        "value": "-3.100000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2017-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Cash from Financing",
+        "table": "financing_activities",
+        "value": "117.664000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2017-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Net Change in Cash",
+        "table": "financing_activities",
+        "value": "142.688000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2017-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Capital Expenditure",
+        "table": "investing_activities",
+        "value": "-9.229000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2017-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Cash Acquisitions",
+        "table": "investing_activities",
+        "value": "-2.959000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2017-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Other Investing Activities, Total",
+        "table": "investing_activities",
+        "value": "-0.080000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2017-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Cash from Investing",
+        "table": "investing_activities",
+        "value": "-12.268000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2017-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Depreciation & Amortization, Total",
+        "table": "operating_activities",
+        "value": "4.236000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2017-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Other Amortization",
+        "table": "operating_activities",
+        "value": "1.100000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2017-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "(Gain) Loss From Sale Of Asset",
+        "table": "operating_activities",
+        "value": "0.054000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2017-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Asset Writedown & Restructuring Costs",
+        "table": "operating_activities",
+        "value": "0.525000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2017-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Stock-Based Compensation",
+        "table": "operating_activities",
+        "value": "10.953000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2017-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Provision & Write-off of Bad debts",
+        "table": "operating_activities",
+        "value": "0.104000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2017-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Other Operating Activities",
+        "table": "operating_activities",
+        "value": "43.455000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2017-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Change In Accounts Receivable",
+        "table": "operating_activities",
+        "value": "-41.184000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2017-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Change In Inventories",
+        "table": "operating_activities",
+        "value": "10.828000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2017-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Change In Accounts Payable",
+        "table": "operating_activities",
+        "value": "24.315000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2017-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Change in Unearned Revenues",
+        "table": "operating_activities",
+        "value": "29.976000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2017-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Change in Other Net Operating Assets",
+        "table": "operating_activities",
+        "value": "16.439000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2017-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Cash from Operations",
+        "table": "operating_activities",
+        "value": "37.292000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2017-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Net Income",
+        "table": "period_ending",
+        "value": "-63.509000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2016-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Total Debt Issued",
+        "table": "financing_activities",
+        "value": "15.000000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2016-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Total Debt Repaid",
+        "table": "financing_activities",
+        "value": "-15.000000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2016-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Issuance of Common Stock",
+        "table": "financing_activities",
+        "value": "0.438000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2016-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Other Financing Activities, Total",
+        "table": "financing_activities",
+        "value": "-0.594000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2016-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Cash from Financing",
+        "table": "financing_activities",
+        "value": "-0.156000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2016-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Net Change in Cash",
+        "table": "financing_activities",
+        "value": "-41.186000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2016-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Capital Expenditure",
+        "table": "investing_activities",
+        "value": "-8.596000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2016-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Other Investing Activities, Total",
+        "table": "investing_activities",
+        "value": "0.029000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2016-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Cash from Investing",
+        "table": "investing_activities",
+        "value": "-8.567000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2016-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Depreciation & Amortization, Total",
+        "table": "operating_activities",
+        "value": "4.602000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2016-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Other Amortization",
+        "table": "operating_activities",
+        "value": "1.294000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2016-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "(Gain) Loss From Sale Of Asset",
+        "table": "operating_activities",
+        "value": "0.029000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2016-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Asset Writedown & Restructuring Costs",
+        "table": "operating_activities",
+        "value": "4.124000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2016-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Stock-Based Compensation",
+        "table": "operating_activities",
+        "value": "8.206000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2016-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Provision & Write-off of Bad debts",
+        "table": "operating_activities",
+        "value": "0.336000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2016-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Other Operating Activities",
+        "table": "operating_activities",
+        "value": "-0.773000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2016-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Change In Accounts Receivable",
+        "table": "operating_activities",
+        "value": "-26.354000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2016-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Change In Inventories",
+        "table": "operating_activities",
+        "value": "-13.256000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2016-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Change In Accounts Payable",
+        "table": "operating_activities",
+        "value": "-2.808000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2016-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Change in Unearned Revenues",
+        "table": "operating_activities",
+        "value": "19.786000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2016-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Change in Other Net Operating Assets",
+        "table": "operating_activities",
+        "value": "15.109000",
+        "subtotal_line": ""
+    }
+    ,
+    {
+        "periodenddate": "2016-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Cash from Operations",
+        "table": "operating_activities",
+        "value": "-32.463000",
+        "subtotal_line": "Y"
+    }
+    ,
+    {
+        "periodenddate": "2016-12-31T00:00:00.000Z",
+        "periodtypename": "Annual",
+        "item": "Net Income",
+        "table": "period_ending",
+        "value": "-42.758000",
+        "subtotal_line": "Y"
+    }
+    ]]

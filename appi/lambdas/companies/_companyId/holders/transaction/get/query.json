@@ -1,0 +1,8 @@
+{
+  "queries": [
+  	"select * from api_schema.Holders_Insider_Transactions where name is not null order by name asc;"
+  ],
+  "query_predicate_name": "symbolValue",
+  "metadata": {
+  }
+}

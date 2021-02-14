@@ -1,0 +1,411 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: APPI Backend - ImageRight Workflow
+Parameters:
+
+  StackName:
+    Type: String
+    Default: appi
+
+  EnvironmentType:
+    Type: String
+    Default: dev
+    AllowedValues:
+    - dev
+    - qa
+    - prod
+
+  # IMAGERIGHT
+
+  Drawer:
+    Description: Name of ImageRight drawer
+    Type: String
+    Default: UW02
+
+  Folder:
+    Description: Name of ImageRight folder
+    Type: String 
+    Default: Worksheets
+
+  IrEndpoint:
+    Description: URL for the DMS service
+    Type: String 
+
+  IrAuthKey:     
+    Description: Authorization key for the endpoint
+    Type: String 
+
+  # DATA SOURCES
+
+  WorksheetsTableName:
+    Description: Name of the worksheets table
+    Type: String
+
+  # NETWORK
+
+  SecurityGroupId:
+    Type: AWS::EC2::SecurityGroup::Id
+  Subnets:
+    Type: List<AWS::EC2::Subnet::Id>
+
+Resources:
+  LambdaExecutionRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service: 
+                - lambda.amazonaws.com
+            Action: 
+             - sts:AssumeRole
+          - Effect: Allow
+            Principal:
+              Service:
+                - dynamodb.amazonaws.com
+            Action:
+              - sts:AssumeRole
+          - Effect: Allow
+            Principal:
+              Service:
+                - s3.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+      Policies:
+        - PolicyName: log-write-and-vpc-access
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+            - Effect: Allow
+              Action:
+                - 'ec2:CreateNetworkInterface'
+                - 'ec2:DescribeNetworkInterfaces'
+                - 'ec2:DeleteNetworkInterface'
+                - 'ec2:DescribeVpnConnections'
+              Resource: '*'
+            - Effect: Allow
+              Action:
+                - 'logs:CreateLogGroup'
+                - 'logs:CreateLogStream'
+                - 'logs:DescribeLogGroups'
+                - 'logs:DescribeLogStreams'
+                - 'logs:PutLogEvents'
+              Resource: '*'
+            - Effect: Allow
+              Action:
+                - 'dynamodb:GetItem'
+                - 'dynamodb:UpdateItem'
+              Resource: '*'
+            - Effect: Allow
+              Action: 
+                - 'ssm:GetParameters'
+              Resource: '*'
+            - Effect: Allow
+              Action:
+                - 's3:Get*'
+                - 's3:List*'
+                - 's3:HeadObject'
+              Resource:
+                - !Sub 'arn:aws:s3:::${StackName}-${EnvironmentType}-worksheet-pdf'
+                - !Sub 'arn:aws:s3:::${StackName}-${EnvironmentType}-worksheet-pdf/*'
+
+  StatesExecutionRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - !Sub states.${AWS::Region}.amazonaws.com
+            Action: sts:AssumeRole
+      Path: /
+      Policies:
+        - PolicyName: StatesExecutionPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - lambda:InvokeFunction
+                Resource: '*'
+
+  CheckFileFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-imageright-check-file'
+      MemorySize: 256
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          DRAWER: !Ref Drawer
+          FOLDER: !Ref Folder
+          IR_ENDPOINT: !Ref IrEndpoint
+          IR_AUTH_KEY: !Ref IrAuthKey
+          S3_BUCKET: !Sub ${StackName}-${EnvironmentType}-worksheet-pdf
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  UploadDocumentFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-imageright-submit-upload'
+      MemorySize: 256
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          DRAWER: !Ref Drawer
+          FOLDER: !Ref Folder
+          IR_ENDPOINT: !Ref IrEndpoint
+          IR_AUTH_KEY: !Ref IrAuthKey
+          S3_BUCKET: !Sub ${StackName}-${EnvironmentType}-worksheet-pdf
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  CheckDocumentStatusFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-imageright-check-status'
+      MemorySize: 256
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          DRAWER: !Ref Drawer
+          FOLDER: !Ref Folder
+          IR_ENDPOINT: !Ref IrEndpoint
+          IR_AUTH_KEY: !Ref IrAuthKey
+          S3_BUCKET: !Sub ${StackName}-${EnvironmentType}-worksheet-pdf
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  UpdateItemFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-imageright-update-worksheet'
+      MemorySize: 256
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          worksheetsTable: !Ref WorksheetsTableName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  DocumentUploadStateMachine:
+    Type: "AWS::StepFunctions::StateMachine"
+    Properties:
+      DefinitionString:
+        !Sub
+          - |-
+            {
+              "Comment": "Uploading a document to ImageRight state machine.",
+              "StartAt": "Submit Check Request",
+              "States": {
+                "Submit Check Request": {
+                  "Type": "Task",
+                  "Resource": "${chfileLambdaArn}",
+                  "Next": "Got Check Token?"
+                },
+                "Got Check Token?": {
+                  "Type" : "Choice",
+                  "Choices": [
+                    {
+                      "Variable": "$.success",
+                      "BooleanEquals": true,
+                      "Next": "Wait Check 1 Second"
+                    }
+                  ],
+                  "Default": "Request Failed"
+                },
+                "Wait Check 1 Second": {
+                  "Type": "Wait",
+                  "Seconds": 1,
+                  "Next": "Get Check Status"
+                },
+                
+                "Get Check Status": {
+                  "Type" : "Task",
+                  "Resource": "${statusLambdaArn}",
+                  "InputPath": "$.data",
+                  "Retry": [
+                    {
+                      "ErrorEquals": ["States.ALL"],
+                      "IntervalSeconds": 1,
+                      "MaxAttempts": 3,
+                      "BackoffRate": 2
+                    }
+                  ],
+                  "Next": "File Exists?"
+                },
+                
+                "File Exists?": {
+                  "Type" : "Choice",
+                  "Choices": [
+                    {
+                      "Variable": "$.status",
+                      "StringEquals": "IN_PROGGRESS",
+                      "Next": "Wait Check 1 Second"
+                    },
+                    {
+                      "Variable": "$.status",
+                      "StringEquals": "FAILED",
+                      "Next": "Request Failed"
+                    },
+                    {
+                      "Variable": "$.status",
+                      "StringEquals": "SUCCEEDED",
+                      "Next": "Submit Upload Request"
+                    }
+                  ],
+                  "Default": "Wait Check 1 Second"
+                },
+                
+                "Submit Upload Request": {
+                  "Type": "Task",
+                  "Resource": "${uploadLambdaArn}",
+                  "Next": "Got Token?"
+                },
+
+                "Got Token?": {
+                  "Type" : "Choice",
+                  "Choices": [
+                    {
+                      "Variable": "$.success",
+                      "BooleanEquals": true,
+                      "Next": "Wait 1 Second"
+                    }
+                  ],
+                  "Default": "Request Failed"
+                },
+                
+                "Wait 1 Second": {
+                  "Type": "Wait",
+                  "Seconds": 1,
+                  "Next": "Get Request Status"
+                },
+
+                "Get Request Status": {
+                  "Type" : "Task",
+                  "Resource": "${statusLambdaArn}",
+                  "InputPath": "$.data",
+                  "Retry": [
+                    {
+                      "ErrorEquals": ["States.ALL"],
+                      "IntervalSeconds": 1,
+                      "MaxAttempts": 3,
+                      "BackoffRate": 2
+                    }
+                  ],
+                  "Next": "Successful Upload?"
+                },
+
+                "Request Failed": {
+                  "Type": "Fail",
+                  "Error": "DefaultStateError",
+                  "Cause": "Upload failed!"
+                },
+                
+                "Successful Upload?": {
+                  "Type" : "Choice",
+                  "Choices": [
+                    {
+                      "Variable": "$.status",
+                      "StringEquals": "IN_PROGGRESS",
+                      "Next": "Wait 1 Second"
+                    },
+                    {
+                      "Variable": "$.status",
+                      "StringEquals": "FAILED",
+                      "Next": "Request Failed"
+                    },
+                    {
+                      "Variable": "$.status",
+                      "StringEquals": "SUCCEEDED",
+                      "Next": "Update Worksheet in DynamoDB"
+                    }
+                  ],
+                  "Default": "Wait 1 Second"
+                },
+
+                "Update Worksheet in DynamoDB": {
+                  "Type": "Task",
+                  "Resource": "${updateLambdaArn}",
+                  "InputPath": "$.data",
+                  "End": true
+                }  
+              }
+            }
+          - {
+              chfileLambdaArn: !GetAtt CheckFileFunction.Arn,
+              uploadLambdaArn: !GetAtt UploadDocumentFunction.Arn,
+              statusLambdaArn: !GetAtt CheckDocumentStatusFunction.Arn,
+              updateLambdaArn: !GetAtt UpdateItemFunction.Arn
+            }
+         
+      RoleArn: !GetAtt StatesExecutionRole.Arn
+    DependsOn:
+      - CheckFileFunction
+      - UploadDocumentFunction
+      - CheckDocumentStatusFunction
+      - UpdateItemFunction
+
+Outputs:
+  ImagerightPostStateMachineArn:
+    Value: !Ref DocumentUploadStateMachine

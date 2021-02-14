@@ -1,0 +1,11 @@
+{
+  "queries": [
+    "select * from api_schema.FinancialStatements_IncomeStatement where symbolvalue is not null order by periodenddate desc, \"table\", sortord;"
+  ],
+  "query_predicate_name": "symbolValue",
+  "metadata": {
+  }
+}
+
+
+

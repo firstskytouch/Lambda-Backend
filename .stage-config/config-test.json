@@ -1,0 +1,25 @@
+{
+  "Parameters" : {
+  	"StackName": "appi",
+  	"TemplatePath": "TEMPLATE_PATH_PLACEHOLDER",
+    "EnvironmentType" : "test",
+    "IssuerName" : "/okta/dev/issuer",
+    "ClientId" : "/okta/dev/cid",
+    "ElasticSearchDomain" : "/datasources/dev/elasticsearch/domain",
+    "RedshiftDatabaseName" : "/datasources/dev/redshift/db",
+    "SECS3Bucket" : "/datasources/dev/s3/sec",
+    "SCAS3Bucket" : "/datasources/dev/s3/sca",
+    "PDFWebBucket" : "/datasources/dev/s3/pdf",
+    "Drawer" : "/imageright/dev/drawer",
+    "Folder" : "/imageright/dev/folder",
+    "IrEndpoint" : "/imageright/dev/endpoint",
+    "IrAuthKey" : "/imageright/dev/authkey",
+    "VpcDefaultSecurityGroup" : "/vpc/securitygroup/default",
+    "VpcPrivateSubnets" : "/vpc/subnets/private",
+    "VpcPublicSubnets" : "/vpc/subnets/public"
+  },
+  "Tags" : {
+    "argo:product:name" : "APPI",
+    "argo:product:stage" : "test"
+  }
+}

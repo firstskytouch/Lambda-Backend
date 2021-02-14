@@ -1,0 +1,75 @@
+{
+  "type" : "object",
+  "required" : [  "cik", "submission", "user_id", "worksheet_id"],
+  "properties" : {
+    "worksheet_id" : {
+      "type" : "string"
+    },
+    "cik" : {
+      "type" : "string"
+    },
+    "company_name" : {
+      "type" : "string"
+    },
+    "ticker" : {
+      "type" : "string"
+    },
+    "user_id" : {
+      "type" : "string"
+    },
+    "state" : {
+      "type" : "string",
+      "enum" : [ "wip", "pdf", "archived" ]
+    },
+    "submission" : {
+      "type" : "object",
+      "required" : [ "agency_id"],
+      "anyOf": [
+        { "required": ["policy_id"] },
+        { "required": ["submission_id"] }
+      ],
+      "properties" : {
+        "submission_id" : {
+          "type" : "string"
+        },
+        "type" : {
+          "type" : "string",
+          "enum" : [ "xs", "primary" ]
+        },
+        "policy_id" : {
+          "type" : "string"
+        },
+        "agency_id" : {
+          "type" : "string"
+        },
+        "effective_date" : {
+          "type" : "string",
+          "format" : "date"
+        }
+      }
+    },
+    "notes" : {
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "required" : [ "note_id", "note_page" ],
+        "properties" : {
+          "note_id" : {
+            "type" : "string"
+          },
+          "note_text" : {
+            "type" : "string",
+            "default" : ""
+          },
+          "note_page" : {
+            "type" : "string",
+            "enum" : [ "overview", "trading", "financial", "risk", "news" ]
+          },
+          "updated_at" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}

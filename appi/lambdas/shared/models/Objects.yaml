@@ -1,0 +1,690 @@
+# OVERVIEW
+
+CompanyProfile:
+  type: "object"
+  title: "Company Profile"
+  properties:
+    headquarters:
+      type: string
+    website:
+      type: string
+      format: uri
+    phone:
+      type: string
+    sic:
+      type: string
+    market_cap:
+      type: string
+    market_cap_price_delta:
+      type: string
+    cfra_risk_score:
+      type: number
+    sweet_spot:
+      type: string
+
+CompanyDetails:
+  type: "object"
+  title: "Company Info"
+  properties:
+    summary:
+      type: string
+    fiscal_year_ends:
+      type: string
+      format: date
+    mrq:
+      type: string
+      format: date
+    mrf:
+      type: string
+      format: date
+    author:
+      type: string
+    years_in_business:
+      type: string
+    ipo:
+      type: string
+      format: date
+
+StockChartRequest:
+  type: "object"
+  title: "Stock Chart Request"
+  properties:
+    lines:
+      type: "array"
+      items:
+        type: "string"
+        enum:
+        - NASDAW
+        - DOWJ
+        - SP500
+    date_range:
+      type: "string"
+      enum:
+      - 2Y
+      - 1Y
+      - YTD
+      - 6M
+      - 1M
+
+StockChartResponse:
+  type: "object"
+  title: "Stock Chart"
+  properties:
+    x_axis_name:
+      type: string
+    y_axis_name:
+      type: string
+    company_line:
+      type: object
+      properties:
+        coordinates:
+          type: "array"
+          items:
+            $ref: "#/definitions/ChartCoordinate"
+    sp_500_line:
+      type: object
+      properties:
+        coordinates:
+          type: "array"
+          items:
+            $ref: "#/definitions/ChartCoordinate"
+    nasdaq_line:
+      type: object
+      properties:
+        coordinates:
+          type: "array"
+          items:
+            $ref: "#/definitions/ChartCoordinate"
+    dow_jones_line:
+      type: object
+      properties:
+        coordinates:
+          type: "array"
+          items:
+            $ref: "#/definitions/ChartCoordinate"
+
+StockChartCoordinate:
+  type: "object"
+  title: "Chart Coordinate"
+  properties:
+    point_metrics:
+      type: "object"
+      properties:
+        trading_volume:
+          type: "string"
+        stock_price:
+          type: "string"
+        52w_volume:
+          type: "string"
+        52w_price:
+          type: "string"
+    x_stock_value: 
+      type: "number"
+    y_stock_date: 
+      type: "string"
+      format: "date"
+
+StockCard:
+  type: "object"
+  title: "Stock Card"
+  properties:
+    value:
+      type: number
+    date:
+      type: string
+      format: date
+    text:
+      type: string
+    is_negative:
+      type: boolean
+
+Holders:
+  type: "object"
+  title: "Holders"
+  properties:
+    percent_all_insider_shares:
+      type: number
+    last_filed:
+      type: string
+      format: date
+
+KeyStats:
+  type: "array"
+  title: "Key Stats"
+  items:
+    $ref: "#/definitions/Table"
+
+KeyStatistic:
+  type: "object"
+  title: "Key Statistic"
+  properties:
+    item_name:
+      type: string
+    most_recent:
+      type: number
+    ttm_or_52w_avg:
+      type: number
+    peer_ttm_or_52w_av:
+      type: number
+
+Table:
+  type: "object"
+  title: "Table"
+  properties:
+    columns:
+      type: "array"
+      items:
+        type: object
+        properties:
+          title:
+            type: string
+          field:
+            type: string
+    data:
+      type: "array"
+      items:
+        type: object
+        additionalProperties:
+          type: string
+
+ESPEstimationChart:
+  type: "object"
+  title: "ESP Estimation Chart"
+  properties:
+    coordinates:
+      type: "array"
+        items:
+          $ref: "#/definitions/ESPChartCoordinate"
+
+ESPChartCoordinate:
+  type: "object"
+  title: "ESP Chart Coordinate"
+  properties:
+    estimate:
+      type: "object"
+      properties:
+        x:
+          type: "string"
+        y:
+          type: "string"
+    actual:
+      type: "object"
+      properties:
+        x:
+          type: "string"
+        y:
+          type: "string"
+
+FinancialsChart:
+  type: "object"
+  title: "Financials Chart"
+  properties:
+    revenue:
+      type: "array"
+        items:
+          $ref: "#/definitions/FinancialChartCoordinate"
+    operating_margin:
+      type: "array"
+        items:
+          $ref: "#/definitions/FinancialChartCoordinate"
+    net_income:
+      type: "array"
+        items:
+          $ref: "#/definitions/FinancialChartCoordinate"
+    earnings:
+      type: "array"
+        items:
+          $ref: "#/definitions/FinancialChartCoordinate"
+    peer_group_avg:
+      type: "array"
+        items:
+          $ref: "#/definitions/FinancialChartCoordinate"
+
+FinancialChartCoordinate:
+  type: "object"
+  title: "Financial Chart Coordinate"
+  properties:
+    x:
+      type: "string"
+    y:
+      type: "string"
+
+# TRADING ANALYSIS
+
+  Earnings:
+    type: "object"
+    title: "Earnings Tables"
+    properties:
+      estimate:
+        type: "object"
+        properties:
+          title: 
+            type: "string"
+          table:
+            $ref: "#/definitions/Table"
+      history:
+        type: "object"
+        properties:
+          title: 
+            type: "string"
+          table:
+            $ref: "#/definitions/Table"
+
+EarningEstimates:
+  type: "array"
+  title: "Earning Estimates"
+  items:
+    $ref: "#/definitions/EarningEstimatesStatistic"
+
+EarningEstimatesStatistic:
+  type: "object"
+  title: "Earning Estimate Statistic"
+  properties:
+    item_name:
+      type: string
+    current_qtr:
+      type: number
+    next_qtr:
+      type: number
+    current_year:
+      type: number
+    next_year:
+      type: number
+
+EarningsHistory:
+  type: "array"
+  title: "Earnings History"
+  items:
+    $ref: "#/definitions/EarningsHistoryStatistic"
+
+EarningsHistoryStatistic:
+  type: "object"
+  title: "Earnings History Statistic"
+  properties:
+    item_name:
+      type: string
+    q1:
+      type: number
+    q2:
+      type: number
+    q3:
+      type: number
+    q4:
+      type: number
+
+StockPriceHistory:
+  type: "array"
+  title: "Stock Price History"
+  items:
+    $ref: "#/definitions/Statistic"
+
+ShareStatistics:
+  type: "array"
+  title: "Share Statistics"
+  items:
+    $ref: "#/definitions/Statistic"
+
+DividendsSplits:
+  type: "array"
+  title: "Dividends & Splits"
+  items:
+    $ref: "#/definitions/Statistic"
+
+Statistic:
+  type: "object"
+  title: "Trading Statistic"
+  properties:
+    item_name:
+      type: string
+    item_value:
+      type: number
+
+AnalystRatingChart:
+  type: "object"
+  title: "Analyst Rating Chart"
+  properties:
+
+DirectHolders:
+  type: "array"
+  title: "Direct Holders"
+  items:
+    $ref: "#/definitions/Holder"
+
+Holder:
+  type: "object"
+  title: "Holder"
+  properties: 
+    name:
+      type: string
+    title: 
+      type: string
+    since:
+      type: string
+    shares:
+      type: number
+    percentages:
+      type: number
+    date_reported:
+      type: string
+
+InsiderTransactions:
+  type: "array"
+  title: "Last 12M Insider Transaction"
+  items:
+    $ref: "#/definitions/Holder"
+
+HolderTransactions:
+  type: "object"
+  title: "Holder Transactions"
+  properties: 
+    name:
+      type: string
+    title: 
+      type: string
+    total_buys:
+      type: number
+    buy_frequency:
+      type: number
+    total_sales:
+      type: number
+    sale_frequency:
+      type: string
+    delta:
+      type: number
+
+# FINANCIAL STATEMENTS
+
+RevenueStats:
+  type: "array"
+  title: "Revenue Stats"
+  items:
+    $ref: "#/definitions/IncomeStatementStatistic"
+
+OperatingExpenses:
+  type: "array"
+  title: "Operating Expenses"
+  items:
+    $ref: "#/definitions/IncomeStatementStatistic"
+
+IncomeContinuingOperations:
+  type: "array"
+  title: "Income from Continuing Operations"
+  items:
+    $ref: "#/definitions/IncomeStatementStatistic"
+
+NonRecurringEvents:
+  type: "array"
+  title: "Non-recurring Events"
+  items:
+    $ref: "#/definitions/IncomeStatementStatistic"
+
+NetIncome:
+  type: "array"
+  title: "Net Income"
+  items:
+    $ref: "#/definitions/IncomeStatementStatistic"
+
+IncomeStatementStatistic:
+  type: "object"
+  title: "Income Statement Statistic"
+  properties:
+    item_name:
+      type: string
+    value1:
+      type: number
+    value2:
+      type: number
+    value3:
+      type: number
+
+OperationRatios:
+  type: "array"
+  title: "Operation Ratios"
+  items:
+    $ref: "#/definitions/RatioStatistic"
+
+ManagementEffectivenessRatios:
+  type: "array"
+  title: "Operation Ratios"
+  items:
+    $ref: "#/definitions/RatioStatistic"
+
+CoverageLeverageRatios:
+  type: "array"
+  title: "Operation Ratios"
+  items:
+    $ref: "#/definitions/RatioStatistic"
+
+LiquidityActivityRatios:
+  type: "array"
+  title: "Operation Ratios"
+  items:
+    $ref: "#/definitions/RatioStatistic"
+
+RatioStatistic:
+  type: "object"
+  title: "Ratio Statistic"
+  properties:
+    item_name:
+      type: string
+    value1:
+      type: number
+    value2:
+      type: number
+    value3:
+      type: number
+    value4:
+      type: number
+
+DebtMaturityChart:
+  type: "object"
+  title: "Debt Maturity Chart"
+  properties:
+
+TopRiskPredictors:
+  type: "array"
+  title: "Top Risk Predictors"
+  items:
+    $ref: "#/definitions/RiskPredictor"
+
+RiskPredictor:
+  type: "object"
+  title: "Risk Predictor"
+  properties:
+    metric_name:
+      type: string
+    performance_vs_peer:
+      $ref: "#/definitions/PerformancePeerChart"
+    predictive_power:
+      type: string
+    impact:
+      type: number
+
+PerformancePeerChart:
+  type: "object"
+  title: "Performance vs Peer group chart"
+  properties:
+    low:
+      type: number
+    med: 
+      type: number
+    max:
+      type: number
+    actual:
+      type: number
+
+CoverageProgramDetailRequest:
+  type: "object"
+  title: "Coverage Program Detail Request"
+  properties:
+    tower_size:
+      type: number
+    num_layers:
+      type: number
+    retention:
+      type: number
+    layers:
+      $ref: "#/definitions/Layer"
+
+Layer:
+  type: "object"
+  title: "Layer"
+  properties:
+    layer:
+      type: string
+    carrier:
+      type: string
+    limit: 
+      type: number
+    retention:
+      type: number
+    premium: 
+      type: number
+
+AttachmentPointsResponse:
+
+
+
+IndustrySCAChart:
+  type: "object"
+  title: "Industry SCA Filing Chart"
+  properties:
+    py_axis_name: 
+      type: "string"
+    sy_axis_name:
+      type: "string"
+    categories:
+      type: "array"
+      items:
+        type: "object"
+        properties:
+          label: 
+            type: string
+    dataseries:
+      type: "array"
+      items:
+        $ref: "#/definitions/IndustrySeries"
+
+IndustrySeries:
+  type: "object"
+  properties:
+    name:
+      type: string
+    parent_y_axis:
+      type: string
+    data: 
+      type: "array"
+      items:
+        type: "object"
+        properties:
+          value:
+            type: string
+
+let testChart = {
+    py_axis_name: "Case Count",
+    sy_axis_name: "Frequency",
+    categories: [
+        {
+            label: "2014"
+        },
+        {
+            label: "2015"
+        },
+        {
+            label: "2016"
+        },
+        {
+            label: "2017"
+        }
+    ],
+    data: [
+        {
+            name: "Case Count",
+            parent_y_axis: "p",
+            data: [
+                {
+                    value: "450"
+                },
+                {
+                    value: "600"
+                },
+                {
+                    value: "800"
+                },
+                {
+                    value: "421"
+                }
+            ]
+        },
+        {
+            name: "Frequency",
+            parent_y_axis: "s",
+            data: [
+                {
+                    value: "400"
+                },
+                {
+                    value: "450"
+                },
+                {
+                    value: "610"
+                },
+                {
+                    value: "550"
+                }
+            ]
+        }
+    ]
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

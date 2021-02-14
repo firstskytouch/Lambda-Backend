@@ -1,0 +1,8 @@
+{
+  "queries": [
+    "select o.*, cfra.decile , m.Governance_score, a.agr_accounting_score from api_schema.Companies_Overhead o left join cfra_spectrum.earnings_risk_levels cfra ON o.gvkey::integer = cfra.gvkey LEFT JOIN ( SELECT DISTINCT s.gvkey, s.cusip, s.isin from sp_spectrum_prod.security s join sp_spectrum_prod.company c on c.gvkey = s.gvkey and s.iid = c.priusa ) cpstat ON o.gvkey = cpstat.gvkey left JOIN msci_spectrum.gov_metrics m on m.issuer_cusip = cpstat.cusip left JOIN msci_spectrum.agr_ratings a on a.issuer_cusip = cpstat.cusip where symbolvalue is not null order by cfra.batchdate desc limit 1;"
+  ],
+  "query_predicate_name": "symbolValue",
+  "metadata": {
+  }
+}

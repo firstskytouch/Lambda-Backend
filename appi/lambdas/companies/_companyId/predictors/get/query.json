@@ -1,0 +1,11 @@
+{
+  "queries": [
+    "NO_PREDICATE select * from predictions_schema.industry_narrow_size_rankings r JOIN ( select industry_group, narrow_size from predictions_schema.industry_narrow_size_rankings where companyid = COMPANY_ID ) t on t.industry_group = r.industry_group and t.narrow_size = r.narrow_size",
+    "NO_PREDICATE select * from predictions_schema.industry_broad_size_rankings r JOIN ( select industry_group, broad_size from predictions_schema.industry_broad_size_rankings where companyid = COMPANY_ID ) t on t.industry_group = r.industry_group and t.broad_size = r.broad_size",
+    "NO_PREDICATE select * from predictions_schema.sector_narrow_size_rankings r JOIN ( select sector_group, narrow_size from predictions_schema.sector_narrow_size_rankings where companyid = COMPANY_ID ) t on t.sector_group = r.sector_group and t.narrow_size = r.narrow_size",
+    "NO_PREDICATE select * from predictions_schema.sector_broad_size_rankings r JOIN ( select sector_group, broad_size from predictions_schema.sector_broad_size_rankings where companyid = COMPANY_ID ) t on t.sector_group = r.sector_group and t.broad_size = r.broad_size"
+  ],
+  "query_predicate_name": "",
+  "metadata": {
+  }
+}

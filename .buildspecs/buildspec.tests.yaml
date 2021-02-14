@@ -1,0 +1,36 @@
+version: 0.2
+
+env:
+  variables:
+    SHARED_FOLDER_PATH:
+      appi/lambdas/shared
+phases:
+  install:
+    runtime-versions:
+      nodejs: 10
+      python: 3.7
+    commands:
+      - npm install --global mocha
+  pre_build:
+    commands:
+      - PWD_BACK=$(pwd)
+      - echo "Installing dependencies..."
+      - |
+        if [ -d "tests/node" ]; then
+          npm install --loglevel=error
+        fi
+      - cd "$PWD_BACK"
+  build:
+    commands:
+      - cd "$SHARED_FOLDER_PATH"
+      - |
+        if [ -d "tests/node" ]; then
+          echo "Running node tests..."
+          npm test
+          if [ $? -ne 0 ]; then exit 1; fi
+          rm -rf node_modules
+        fi
+      - cd "$PWD_BACK"
+artifacts:
+  files:
+    - '**/*'

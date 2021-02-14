@@ -1,0 +1,8 @@
+{
+  "queries": [
+  	"SELECT d.*, b.full_found_mscads, b.partial_mscads_only, b.msci_flagged_director_profile FROM api_schema.Holders_Direct d LEFT JOIN bad_actors b on d.personId = b.personId where d.name is not null order by d.name asc;"
+  ],
+  "query_predicate_name": "d.symbolValue",
+  "metadata": {
+  }
+}

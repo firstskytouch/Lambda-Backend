@@ -1,0 +1,12 @@
+{
+  "queries": [
+    "select * from api_schema.TradingAnalysis_TradingInfo_StockPriceHistory where value is not null order by item asc;",
+    "NO_PREDICATE select * from api_schema.TradingAnalysis_TradingInfo_StockPriceHistory_SP;",
+    "select * from api_schema.TradingAnalysis_TradingInfo_ShareStatistics where value is not null order by item asc;",
+    "select * from api_schema.TradingAnalysis_TradingInfo_Dividends_Splits where value is not null order by item asc;",
+    "select * from api_schema.TradingAnalysis_TradingInfo_Dividends_Splits_Dates where value is not null order by item asc;"
+  ],
+  "query_predicate_name": "symbolValue",
+  "metadata": {
+  }
+}

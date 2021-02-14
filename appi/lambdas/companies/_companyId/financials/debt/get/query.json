@@ -1,0 +1,8 @@
+{
+  "queries": [
+  	"select * from api_schema.Financials_Debt_Maturity_Schedule where section = 'debt' and item != 'Total Debt Repaid' order by item, section;"
+  ],
+  "query_predicate_name": "symbolValue",
+  "metadata": {
+  }
+}

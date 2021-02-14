@@ -1,0 +1,15 @@
+{
+  "queries": [
+  	"select volume as trading_volume, priceLow, priceHigh, priceClose as x_stock_value, pricingDate as y_stock_date, currencyname, exchangesymbol from api_schema.Companies_StockChart where pricelow is not null ORDER BY pricingDate asc;",
+  	"select dateadd(week, -52, max(pricingDate)) as min_date from api_schema.Companies_StockChart;",
+  	"NO_PREDICATE select pricingDate as pricingdate_dowj, PriceClose as priceclose_dowj from api_schema.Companies_StockChart_DOWJ order by pricingdate_dowj asc;",
+  	"NO_PREDICATE select pricingDate as pricingdate_nasdaq, PriceClose as priceclose_nasdaq from api_schema.Companies_StockChart_NASDAQ order by pricingdate_nasdaq asc;",
+  	"NO_PREDICATE select pricingDate as pricingdate_sp500, PriceClose as priceclose_sp500 from api_schema.Companies_StockChart_SP500 order by pricingdate_sp500 asc;"
+  ],
+  "query_predicate_name": "symbolValue",
+  "metadata": {
+  }
+}
+
+
+

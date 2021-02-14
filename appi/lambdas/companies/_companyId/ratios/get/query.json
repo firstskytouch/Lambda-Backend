@@ -1,0 +1,10 @@
+{
+  "queries": [
+  	"select * from api_schema.FinancialStatements_Ratios_peers where symbolvalue is not null order by periodTypeName, fiscalYear, \"table\", sortord;"
+  ],
+  "query_predicate_name": "symbolValue",
+  "metadata": {
+  }
+}
+
+

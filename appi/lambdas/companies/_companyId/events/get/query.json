@@ -1,0 +1,8 @@
+{
+  "queries": [
+    "select * from api_schema.Events where symbolvalue is not null order by since desc;"
+  ],
+  "query_predicate_name": "symbolValue",
+  "metadata": {
+  }
+}

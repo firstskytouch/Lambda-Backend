@@ -1,0 +1,9 @@
+{
+  "queries": [
+    "select * from api_schema.TradingAnalysis_Earning_Estimate where symbolvalue is not null order by col_name, sortord;",
+    "select * from api_schema.TradingAnalysis_Earning_History where symbolvalue is not null order by periodenddate, section, sortord;"
+  ],
+  "query_predicate_name": "symbolValue",
+  "metadata": {
+  }
+}

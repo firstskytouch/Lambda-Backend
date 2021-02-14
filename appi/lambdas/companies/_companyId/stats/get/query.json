@@ -1,0 +1,27 @@
+{
+  "queries": [
+    "select item, value, SELECTION_PLACEHOLDER from api_schema.Companies_KeyStats_peers where symbolvalue is not null order by sortord asc;"
+  ],
+  "query_predicate_name": "symbolValue",
+  "metadata": {
+  	"numerical_column_suffixes": [
+  		"_peers",
+  		"_p10",
+  		"_p25",
+  		"_p50",
+  		"_p75",
+  		"_p90",
+      "_percent_rank"
+  	],
+  	"categorical_column_suffixes": [
+  		"_sp_rated",
+  		"_sp_notrated",
+  		"_aaa_to_aa",
+  		"_a",
+  		"_bbb",
+  		"_bb",
+  		"_b",
+  		"_ccc_to_d"
+  	]
+  }
+}

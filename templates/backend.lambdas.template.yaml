@@ -1,0 +1,1865 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: APPI Backend - Lambda Functions
+Parameters:
+
+  StackName:
+    Type: String
+    Default: appi
+
+  EnvironmentType:
+    Type: String
+    Default: dev
+    AllowedValues:
+    - dev
+    - qa
+    - prod
+
+  # DATA SOURCES
+
+  UsersTableName:
+    Description: Name of the users table
+    Type: String
+  WorksheetsTableName:
+    Description: Name of the worksheets table
+    Type: String
+  ProgramsTableName:
+    Description: Name of the programs table
+    Type: String
+  CarriersTableName:
+    Description: Name of the programs table
+    Type: String
+  WorksheetsBucket:
+    Description: Location of user worksheets
+    Type: String
+  SECS3Bucket:
+    Description: Location of SEC documents
+    Type: String
+  SCAS3Bucket:
+    Description: Location of SCA documents
+    Type: String
+  ElasticSearchDomain:
+    Description: Endpoint of elastic search
+    Type: String
+  ImagerightPostStateMachineArn:
+    Type: String
+
+  # NETWORK
+
+  VPCId:
+    Type: AWS::EC2::VPC::Id
+  SecurityGroupId:
+    Type: AWS::EC2::SecurityGroup::Id
+  Subnets:
+    Type: List<AWS::EC2::Subnet::Id>
+
+  # Company API
+  CAPIAPIDomain:
+    Type: String
+
+  CAPISecrets:
+    Type: String
+
+Conditions:
+  IsProduction: !Equals [ !Ref EnvironmentType, prod ]
+
+Resources:
+
+  # S3
+
+  WorksheetPDFS3Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      AccessControl: Private
+      BucketName: !Sub '${StackName}-${EnvironmentType}-worksheet-pdf'
+      VersioningConfiguration: 
+        Status: Enabled
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: aws:kms
+              KMSMasterKeyID: alias/aws/s3
+
+  PDFWebsiteBucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      AccessControl: Private
+      BucketName: !Sub '${StackName}-${EnvironmentType}-web-ui-pdf'
+      WebsiteConfiguration:
+        IndexDocument: pdf.html
+        ErrorDocument: pdf.html
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256 # needed for serving up website
+
+  PDFWebsiteBucketPolicy: 
+    Type: AWS::S3::BucketPolicy
+    Properties: 
+      Bucket: !Sub '${StackName}-${EnvironmentType}-web-ui-pdf'
+      PolicyDocument: 
+        Statement: 
+          - Sid: 'PDF-Access-to-specific-VPCE-only'
+            Principal: "*"
+            Action: 
+              - 's3:GetObject'
+            Effect: 'Allow'
+            Resource: 
+              - !Sub 'arn:aws:s3:::${StackName}-${EnvironmentType}-web-ui-pdf/*'
+            Condition: 
+              StringLike: 
+                aws:sourceVpc: 
+                  - !Ref VPCId
+
+  PDFWebsiteBucketParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub /s3/${EnvironmentType}/buckets/website-pdf
+      Type: String
+      Value: !Ref PDFWebsiteBucket
+
+  PDFWebsiteBucketUrlParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub /s3/${EnvironmentType}/buckets/website-pdf/url
+      Type: String
+      Value: !GetAtt PDFWebsiteBucket.WebsiteURL
+
+  ApiLambdaExecutionRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service: 
+                - lambda.amazonaws.com
+            Action: 
+             - sts:AssumeRole
+          - Effect: Allow
+            Principal:
+              Service:
+                - apigateway.amazonaws.com
+            Action:
+              - sts:AssumeRole
+          - Effect: Allow
+            Principal:
+              Service:
+                - dynamodb.amazonaws.com
+            Action:
+              - sts:AssumeRole
+          - Effect: Allow
+            Principal:
+              Service:
+                - s3.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+      Policies:
+        - PolicyName: log-write-and-vpc-access
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+            - Effect: Allow
+              Action:
+                - 'ec2:CreateNetworkInterface'
+                - 'ec2:DescribeNetworkInterfaces'
+                - 'ec2:DeleteNetworkInterface'
+                - 'ec2:DescribeVpnConnections'
+              Resource: '*'
+            - Effect: Allow
+              Action:
+                - 'logs:CreateLogGroup'
+                - 'logs:CreateLogStream'
+                - 'logs:DescribeLogGroups'
+                - 'logs:DescribeLogStreams'
+                - 'logs:PutLogEvents'
+              Resource: '*'
+            - Effect: Allow
+              Action:
+                - 'lambda:InvokeFunction'
+              Resource: '*'
+            - Effect: Allow
+              Action:
+                - 'dynamodb:GetItem'
+                - 'dynamodb:Query'
+                - 'dynamodb:Scan'
+                - 'dynamodb:PutItem'
+                - 'dynamodb:UpdateItem'
+                - 'dynamodb:DeleteItem'
+                - 'dynamodb:ListTables'
+              Resource: '*'
+            - Effect: Allow
+              Action: 
+                - 'ssm:GetParameters'
+              Resource: '*'
+            - Effect: Allow
+              Action:
+                - 's3:GetObject'
+                - 's3:ListObjects'
+                - 's3:ListBucket'
+              Resource:
+                - !Sub 'arn:aws:s3:::${SECS3Bucket}'
+                - !Sub 'arn:aws:s3:::${SECS3Bucket}/*'
+                - !Sub 'arn:aws:s3:::${SCAS3Bucket}'
+                - !Sub 'arn:aws:s3:::${SCAS3Bucket}/*'
+                - !Sub 'arn:aws:s3:::${WorksheetsBucket}'
+                - !Sub 'arn:aws:s3:::${WorksheetsBucket}/*'
+                - !Sub 'arn:aws:s3:::${StackName}-${EnvironmentType}-web-ui'
+                - !Sub 'arn:aws:s3:::${StackName}-${EnvironmentType}-web-ui/*'
+                - !Sub 'arn:aws:s3:::${WorksheetPDFS3Bucket}'
+                - !Sub 'arn:aws:s3:::${WorksheetPDFS3Bucket}/*'
+            - Effect: Allow
+              Action:
+                - 's3:PutObject'
+              Resource:
+                - !Sub 'arn:aws:s3:::${WorksheetsBucket}'
+                - !Sub 'arn:aws:s3:::${WorksheetsBucket}/*'
+                - !Sub 'arn:aws:s3:::${WorksheetPDFS3Bucket}'
+                - !Sub 'arn:aws:s3:::${WorksheetPDFS3Bucket}/*'
+            - Effect: Allow
+              Action:
+                - 'es:ESHttpGet'
+              Resource: '*'
+            - Effect: Allow
+              Action:
+                - 'states:StartExecution'
+                - 'states:GetExecutionHistory'
+              Resource: 
+                - 'arn:aws:states:*:*:*'
+            - Effect: Allow
+              Action:
+                - kms:Decrypt
+                - kms:Encrypt
+                - kms:GenerateDataKey
+              Resource:
+                - "*"
+
+  # COMPANY
+
+  CompanyGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-get'
+      MemorySize: 1536
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          elasticSearchEndpoint: !Ref ElasticSearchDomain
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  CompanyCompanyIdGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-get'
+      MemorySize: 1536
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          elasticSearchEndpoint: !Ref ElasticSearchDomain
+          predictionTable: !Sub '${StackName}-${EnvironmentType}-predictive-models'
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  # DETAILS
+
+  CompanyCompanyIdDetailsGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-details-get'
+      MemorySize: 1536
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  # EARNINGS
+
+  CompanyCompanyIdEarningsGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-earnings-get'
+      MemorySize: 1536
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  # ESTIMATIONS
+
+  CompanyCompanyIdEstimationsGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-estimations-get'
+      MemorySize: 1536
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  # FINANCIALS
+
+  CompanyCompanyIdFinancialsGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-financials-get'
+      MemorySize: 1536
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  CompanyCompanyIdFinancialsIncomeGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-financials-income-get'
+      MemorySize: 1536
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  CompanyCompanyIdFinancialsBalanceGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-financials-balance-get'
+      MemorySize: 1536
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  CompanyCompanyIdFinancialsCashGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-financials-cash-get'
+      MemorySize: 1536
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  CompanyCompanyIdFinancialsDebtGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-financials-debt-get'
+      MemorySize: 1536
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  # HOLDERS
+
+  CompanyCompanyIdHoldersGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-holders-get'
+      MemorySize: 1536
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  CompanyCompanyIdHoldersDirectGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-holders-direct-get'
+      MemorySize: 1536
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  CompanyCompanyIdHoldersTransactionGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-holders-transaction-get'
+      MemorySize: 1536
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  CompanyCompanyIdHoldersInstitutionGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-holders-institution-get'
+      MemorySize: 1536
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  # PREDICTORS
+
+  CompanyCompanyIdPredictorsGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-predictors-get'
+      MemorySize: 1536
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          elasticSearchEndpoint: !Ref ElasticSearchDomain
+          predictionTable: !Sub '${StackName}-${EnvironmentType}-predictive-models'
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  # ATTACHMENTS
+  CompanyCompanyIdAttachmentsGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-attachments-get'
+      MemorySize: 1536
+      Timeout: 300
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          elasticSearchEndpoint: !Ref ElasticSearchDomain
+          predictionTable: !Sub '${StackName}-${EnvironmentType}-predictive-models'
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };  
+
+  # PROGRAMS
+
+  CompanyCompanyIdProgramsGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-programs-get'
+      MemorySize: 1536
+      Timeout: 300
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          elasticSearchEndpoint: !Ref ElasticSearchDomain
+          carriersTableName: !Ref CarriersTableName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };  
+
+  CompanyCompanyIdProgramsPostFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-programs-post'
+      MemorySize: 1536
+      Timeout: 300
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          programsTable: !Ref ProgramsTableName
+          carriersTable: !Ref CarriersTableName
+          elasticSearchEndpoint: !Ref ElasticSearchDomain
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  CompanyCompanyIdProgramsProgramIdPutFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-programs-_programId-put'
+      MemorySize: 1536
+      Timeout: 300
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          programsTable: !Ref ProgramsTableName
+          carriersTable: !Ref CarriersTableName
+          elasticSearchEndpoint: !Ref ElasticSearchDomain
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          }; 
+
+  # RATIOS
+
+  CompanyCompanyIdRatiosGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-ratios-get'
+      MemorySize: 1536
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  # RISKS
+
+  CompanyCompanyIdRisksGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-risks-get'
+      MemorySize: 1536
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  # KEY STATS
+
+  CompanyCompanyIdStatsGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-stats-get'
+      MemorySize: 1536
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  # STOCKS
+
+  CompanyCompanyIdStocksGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-stocks-get'
+      MemorySize: 1536
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  CompanyCompanyIdStocksVariationsGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-stocks-variations-get'
+      MemorySize: 1536
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  # TRADINGS
+
+  CompanyCompanyIdTradingsGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-tradings-get'
+      MemorySize: 1536
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  # DOCUMENTS
+
+  CompanyCompanyIdDocumentGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-documents-get'
+      MemorySize: 1536
+      Timeout: 3
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          elasticSearchEndpoint: !Ref ElasticSearchDomain
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  CompanyCompanyIdDocumentDocumentIdGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-documents-_documentId-get'
+      MemorySize: 1536
+      Timeout: 3
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          elasticSearchEndpoint: !Ref ElasticSearchDomain
+          secBucket: !Ref SECS3Bucket
+          scaBucket: !Ref SCAS3Bucket
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  # USERS
+
+  UsersGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-users-get'
+      MemorySize: 1536
+      Timeout: 3
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          usersTable: !Ref UsersTableName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  UsersPostFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-users-post'
+      MemorySize: 1536
+      Timeout: 3
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          usersTable: !Ref UsersTableName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  UsersUserIdGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-users-_userId-get'
+      MemorySize: 1536
+      Timeout: 3
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          usersTable: !Ref UsersTableName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  UsersUserIdPutFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-users-_userId-put'
+      MemorySize: 1536
+      Timeout: 3
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          usersTable: !Ref UsersTableName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  # WORKSHEETS
+
+  UsersUserIdWorksheetsGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-users-_userId-worksheets-get'
+      MemorySize: 1536
+      Timeout: 3
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          elasticSearchEndpoint: !Ref ElasticSearchDomain
+          usersTable: !Ref UsersTableName
+          worksheetsTable: !Ref WorksheetsTableName
+          worksheetsBucket: !Ref WorksheetsBucket
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  UsersUserIdWorksheetsPostFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-users-_userId-worksheets-post'
+      MemorySize: 1536
+      Timeout: 3
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          elasticSearchEndpoint: !Ref ElasticSearchDomain
+          usersTable: !Ref UsersTableName
+          worksheetsTable: !Ref WorksheetsTableName
+          worksheetsBucket: !Ref WorksheetsBucket
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  UsersUserIdWorksheetsWorksheetIdGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-users-_userId-worksheets-_worksheetId-get'
+      MemorySize: 1536
+      Timeout: 3
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          elasticSearchEndpoint: !Ref ElasticSearchDomain
+          worksheetsTable: !Ref WorksheetsTableName
+          worksheetsBucket: !Ref WorksheetsBucket
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  UsersUserIdWorksheetsWorksheetIdPutFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-users-_userId-worksheets-_worksheetId-put'
+      MemorySize: 1536
+      Timeout: 3
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          elasticSearchEndpoint: !Ref ElasticSearchDomain
+          worksheetsTable: !Ref WorksheetsTableName
+          worksheetsBucket: !Ref WorksheetsBucket
+          programsTable: !Ref ProgramsTableName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  UsersUserIdWorksheetsWorksheetIdDeleteFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-users-_userId-worksheets-_worksheetId-delete'
+      MemorySize: 1536
+      Timeout: 3
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          elasticSearchEndpoint: !Ref ElasticSearchDomain
+          worksheetsTable: !Ref WorksheetsTableName
+          worksheetsBucket: !Ref WorksheetsBucket
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  UsersUserIdWorksheetsPDFGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-users-_userId-worksheets-_worksheetId-pdf-get'
+      MemorySize: 1536
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          bucketName: !Sub '${StackName}-${EnvironmentType}-web-ui'
+          CHROME_BUCKET: !Ref WorksheetPDFS3Bucket
+          pdfBucket: !Ref WorksheetPDFS3Bucket
+          worksheetsTable: !Ref WorksheetsTableName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+          
+  UsersUserIdWorksheetsPDFPostFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-users-_userId-worksheets-_worksheetId-pdf-post'
+      MemorySize: 2048
+      Timeout: 30
+      Runtime: nodejs8.10
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          pdfBucket: !Ref WorksheetPDFS3Bucket
+          pdfWebBucketUrl: !GetAtt PDFWebsiteBucket.WebsiteURL
+          worksheetsTable: !Ref WorksheetsTableName
+          
+      Layers:
+        - !Ref PDFLibLayer
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  PDFLibLayer:
+    Type: "AWS::Lambda::LayerVersion"
+    Properties:
+      CompatibleRuntimes: 
+        - nodejs10.x
+      Content: 
+        S3Bucket: !If [IsProduction, !Sub '${StackName}.argo-digital.com', !Sub '${EnvironmentType}.${StackName}.argo-digital.com']
+        S3Key: !Sub 'code/${EnvironmentType}/worksheet-pdf-lambda-layer.zip'
+      Description: Additional lib for puppeteer
+      LayerName: worksheet-pdf-lib
+      LicenseInfo: MIT
+
+  # IMAGERIGHT
+
+  UsersUserIdWorksheetsWorksheetIdImageRightPostFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-users-_userId-worksheets-_worksheetId-ir-post'
+      MemorySize: 256
+      Timeout: 30
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          worksheetsTable: !Ref WorksheetsTableName
+          stateMachineArn: !Ref ImagerightPostStateMachineArn
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  # EVENTS
+
+  EventsGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-companies-_companyId-events-get'
+      MemorySize: 1536
+      Timeout: 60
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  # INDUSTRIES
+
+  IndustriesGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-industries-get'
+      MemorySize: 3008
+      Timeout: 120
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          elasticSearchEndpoint: !Ref ElasticSearchDomain
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          }; 
+
+  # BadActors
+  BadActorsGettFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-documents-get'
+      MemorySize: 1536
+      Timeout: 30
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          elasticSearchEndpoint: !Ref ElasticSearchDomain
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  # Private Companies
+
+  PrivateCompaniesGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-private-get'
+      MemorySize: 128
+      Timeout: 30
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          CAPIDomain: !Ref CAPIAPIDomain
+          CAPIApiKey: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:apiKey}}'
+          CAPISigningSecret: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:signingSecret}}'
+          
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  PrivateCompaniesCompanyGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-private-_companyId-get'
+      MemorySize: 128
+      Timeout: 30
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          CAPIDomain: !Ref CAPIAPIDomain
+          CAPIApiKey: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:apiKey}}'
+          CAPISigningSecret: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:signingSecret}}'
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  PrivateCompaniesPostFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-private-post'
+      MemorySize: 128
+      Timeout: 30
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          CAPIDomain: !Ref CAPIAPIDomain
+          CAPIApiKey: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:apiKey}}'
+          CAPISigningSecret: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:signingSecret}}'
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+  
+  PrivateCompaniesCompanyPutFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-private-_companyId-put'
+      MemorySize: 128
+      Timeout: 30
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          CAPIDomain: !Ref CAPIAPIDomain
+          CAPIApiKey: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:apiKey}}'
+          CAPISigningSecret: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:signingSecret}}'
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  PrivateCompaniesCompanyBalanceGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-private-_companyId-balance-get'
+      MemorySize: 128
+      Timeout: 30
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          CAPIDomain: !Ref CAPIAPIDomain
+          CAPIApiKey: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:apiKey}}'
+          CAPISigningSecret: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:signingSecret}}'
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  PrivateCompaniesCompanyCashGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-private-_companyId-cash-get'
+      MemorySize: 128
+      Timeout: 30
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          CAPIDomain: !Ref CAPIAPIDomain
+          CAPIApiKey: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:apiKey}}'
+          CAPISigningSecret: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:signingSecret}}'
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  PrivateCompaniesCompanyCompensationGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-private-_companyId-compensation-get'
+      MemorySize: 128
+      Timeout: 30
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          CAPIDomain: !Ref CAPIAPIDomain
+          CAPIApiKey: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:apiKey}}'
+          CAPISigningSecret: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:signingSecret}}'
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  PrivateCompaniesCompanyEmployementGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-private-_companyId-employment-get'
+      MemorySize: 128
+      Timeout: 30
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          CAPIDomain: !Ref CAPIAPIDomain
+          CAPIApiKey: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:apiKey}}'
+          CAPISigningSecret: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:signingSecret}}'
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  PrivateCompaniesCompanyFiduciaryGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-private-_companyId-fiduciary-get'
+      MemorySize: 128
+      Timeout: 30
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          CAPIDomain: !Ref CAPIAPIDomain
+          CAPIApiKey: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:apiKey}}'
+          CAPISigningSecret: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:signingSecret}}'
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  PrivateCompaniesCompanyIncomeGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-private-_companyId-income-get'
+      MemorySize: 128
+      Timeout: 30
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          CAPIDomain: !Ref CAPIAPIDomain
+          CAPIApiKey: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:apiKey}}'
+          CAPISigningSecret: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:signingSecret}}'
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+  
+  PrivateCompaniesCompanyJurisdictionsGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-private-_companyId-jurisdictions-get'
+      MemorySize: 128
+      Timeout: 30
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          CAPIDomain: !Ref CAPIAPIDomain
+          CAPIApiKey: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:apiKey}}'
+          CAPISigningSecret: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:signingSecret}}'
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  PrivateCompaniesCompanyOwnershipGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-private-_companyId-ownership-get'
+      MemorySize: 128
+      Timeout: 30
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          CAPIDomain: !Ref CAPIAPIDomain
+          CAPIApiKey: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:apiKey}}'
+          CAPISigningSecret: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:signingSecret}}'
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  PrivateCompaniesCompanySubmissionGetFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-private-_companyId-submission-get'
+      MemorySize: 128
+      Timeout: 30
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          CAPIDomain: !Ref CAPIAPIDomain
+          CAPIApiKey: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:apiKey}}'
+          CAPISigningSecret: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:signingSecret}}'
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };        
+
+  PrivateCompaniesCompanySubmissionPostFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-private-_companyId-submission-post'
+      MemorySize: 128
+      Timeout: 30
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          CAPIDomain: !Ref CAPIAPIDomain
+          CAPIApiKey: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:apiKey}}'
+          CAPISigningSecret: !Sub '{{resolve:secretsmanager:${CAPISecrets}:SecretString:signingSecret}}'
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  SNPChromeExtPost:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-snp-chrome-ext-post'
+      MemorySize: 128
+      Timeout: 30
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+          scoresTableName: !Sub '${StackName}-${EnvironmentType}-snp-credit-scores'
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  # API WARMUP
+
+  WarmupAPIsFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${StackName}-${EnvironmentType}-warmup-apis'
+      MemorySize: 128
+      Timeout: 30
+      Runtime: nodejs10.x
+      Role: !GetAtt ApiLambdaExecutionRole.Arn
+      Handler: index.handler
+      VpcConfig:
+        SubnetIds: !Ref Subnets
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+      Environment:
+        Variables:
+          stage: !Ref EnvironmentType
+          stack: !Ref StackName
+      Code:
+        ZipFile: >
+          'use strict';
+          exports.handler = function(event, context, callback) {
+            console.log('TODO');
+            callback(null, 'TODO');
+          };
+
+  WarmupCWPermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      FunctionName: !GetAtt WarmupAPIsFunction.Arn
+      Action: 'lambda:InvokeFunction'
+      Principal: events.amazonaws.com
+      SourceArn: !GetAtt WarmupAPIsRule.Arn
+    DependsOn:
+      - WarmupAPIsFunction
+      - WarmupAPIsRule
+
+  WarmupAPIsRule:
+    Type: 'AWS::Events::Rule'
+    Properties:
+      ScheduleExpression: rate(3 minutes)
+      Targets:
+        - Id: WarmupAPIsRule-Lambda
+          Arn: !GetAtt WarmupAPIsFunction.Arn
+
+Outputs:
+  LambdaExecutionRoleArn:
+    Value: !GetAtt ApiLambdaExecutionRole.Arn
+  WorksheetPDFBucket:
+    Value: !Ref WorksheetPDFS3Bucket

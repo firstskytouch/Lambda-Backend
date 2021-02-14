@@ -1,0 +1,156 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: APPI Backend
+Parameters:
+  TemplatePath:
+    Type: String
+
+  StackName:
+    Type: String
+    Default: appi
+
+  EnvironmentType:
+    Type: String
+    Default: dev
+    AllowedValues:
+    - dev
+    - qa
+    - prod
+
+  # OKTA
+
+  IssuerName:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+
+  ClientId:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+
+  # DATASOURCES
+
+  ElasticSearchDomain:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+
+  SECS3Bucket:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+
+  SCAS3Bucket:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+
+  # IMAGERIGHT
+
+  Drawer:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+
+  Folder:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+
+  IrEndpoint:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+
+  IrAuthKey:     
+    Type: 'AWS::SSM::Parameter::Value<String>'
+
+  # NETWORK
+
+  VpcId:
+    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::VPC::Id>'
+
+  VpcDefaultSecurityGroup:
+    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::SecurityGroup::Id>'
+
+  VpcPrivateSubnets:
+    Type: 'AWS::SSM::Parameter::Value<List<AWS::EC2::Subnet::Id>>'
+
+  VpcPublicSubnets:
+    Type: 'AWS::SSM::Parameter::Value<List<AWS::EC2::Subnet::Id>>'
+
+  # Company API
+  CAPIAPIDomain:
+    Type: String
+
+  CAPISecrets:
+    Type: String
+
+Resources:
+  ApiGateway:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub https://s3.amazonaws.com/${TemplatePath}/templates/backend.apigateway.template.yaml
+      Parameters:
+        StackName: !Ref StackName
+        EnvironmentType: !Ref EnvironmentType
+        LambdaExecutionRoleArn: !GetAtt Lambdas.Outputs.LambdaExecutionRoleArn
+        IssuerName: !Ref IssuerName
+        ClientId: !Ref ClientId
+        Subnets: !Join
+          - ','
+          - !Ref VpcPrivateSubnets
+        SecurityGroupId: !Ref VpcDefaultSecurityGroup
+    DependsOn: Lambdas
+
+  Datasources:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub https://s3.amazonaws.com/${TemplatePath}/templates/backend.datasources.template.yaml
+      Parameters:
+        StackName: !Ref StackName
+        EnvironmentType: !Ref EnvironmentType
+        ElasticSearchDomain: !Ref ElasticSearchDomain
+        Subnets: !Join
+          - ','
+          - !Ref VpcPrivateSubnets
+        SecurityGroupId: !Ref VpcDefaultSecurityGroup
+
+  ImageRight:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub https://s3.amazonaws.com/${TemplatePath}/templates/backend.imageright.template.yaml
+      Parameters:
+        StackName: !Ref StackName
+        EnvironmentType: !Ref EnvironmentType
+        WorksheetsTableName: !GetAtt Datasources.Outputs.WorksheetsTableName
+        Drawer: !Ref Drawer
+        Folder: !Ref Folder
+        IrEndpoint: !Ref IrEndpoint
+        IrAuthKey: !Ref IrAuthKey
+        Subnets: !Join
+          - ','
+          - !Ref VpcPrivateSubnets
+        SecurityGroupId: !Ref VpcDefaultSecurityGroup
+
+  Lambdas:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub https://s3.amazonaws.com/${TemplatePath}/templates/backend.lambdas.template.yaml
+      Parameters:
+        StackName: !Ref StackName
+        EnvironmentType: !Ref EnvironmentType
+        UsersTableName: !GetAtt Datasources.Outputs.UsersTableName
+        WorksheetsTableName: !GetAtt Datasources.Outputs.WorksheetsTableName
+        ProgramsTableName: !GetAtt Datasources.Outputs.ProgramsTableName
+        CarriersTableName: !GetAtt Datasources.Outputs.CarriersTableName
+        WorksheetsBucket: !GetAtt Datasources.Outputs.WorksheetsBucket
+        SCAS3Bucket: !Ref SCAS3Bucket
+        SECS3Bucket: !Ref SECS3Bucket
+        ElasticSearchDomain: !Ref ElasticSearchDomain
+        ImagerightPostStateMachineArn: !GetAtt ImageRight.Outputs.ImagerightPostStateMachineArn
+        CAPIAPIDomain: !Ref CAPIAPIDomain
+        CAPISecrets: !Ref CAPISecrets
+        VPCId: !Ref VpcId
+        Subnets: !Join
+          - ','
+          - !Ref VpcPrivateSubnets
+        SecurityGroupId: !Ref VpcDefaultSecurityGroup
+
+  SNPChromeExt:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub https://s3.amazonaws.com/${TemplatePath}/templates/backend.snp-chrome-ext.template.yaml
+      Parameters:
+        StackName: !Ref StackName
+        EnvironmentType: !Ref EnvironmentType
+        LambdaExecutionRoleArn: !GetAtt Lambdas.Outputs.LambdaExecutionRoleArn
+        Subnets: !Join
+          - ','
+          - !Ref VpcPrivateSubnets
+        SecurityGroupId: !Ref VpcDefaultSecurityGroup
+    DependsOn: Lambdas

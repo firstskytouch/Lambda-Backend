@@ -1,0 +1,12 @@
+{
+  "queries": [
+    "select summary from api_schema.Companies_CompanyInfo;",
+    "select fiscal_year_ends from api_schema.Companies_Fiscal_Year_Ends;",
+    "select mrq, mrf from api_schema.Companies_MostRecentQuarter_MostRecentFilingDate;",
+    "select years_in_business, auditor from api_schema.Companies_Years_In_Business_Auditor;",
+    "select ipodate as ipo from api_schema.Companies_IPO_Date;"
+  ],
+  "query_predicate_name": "symbolValue",
+  "metadata": {
+  }
+}

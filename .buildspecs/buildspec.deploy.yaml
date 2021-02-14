@@ -1,0 +1,179 @@
+version: 0.2
+
+env:
+  variables:
+    PROFILE:
+      xacc
+    WORKSHEET_PDF:
+      users-_userId-worksheets-_worksheetId-pdf-post 
+    CACHE_DIR:
+      .appi_cache
+    DEPLOY_NODE_LAYER:
+      1
+    DEPLOY_ALL_FUNCTIONS:
+      1
+    SHARED_FOLDER_PATH:
+      appi/lambdas/shared
+    CONFIG_FILES: |
+      .stage-config/config-test.json
+      .stage-config/config-dev.json
+      .stage-config/config-qa.json
+      .stage-config/config-prod.json
+phases:
+  install:
+    runtime-versions:
+      nodejs: 10
+      python: 3.7
+      ruby: 2.6
+  pre_build:
+    commands:
+      - |
+        aws configure set profile.${PROFILE}.role_arn "${PROFILE_ROLE_ARN}"
+        aws configure set profile.${PROFILE}.credential_source EcsContainer
+      - |
+        STACK_NAME=$(cat .stage-config/config-$STAGE_NAME.json | jq -cr '.Parameters.StackName')
+        NODE_LAYER="${STACK_NAME}-${STAGE_NAME}-backend-node_modules"
+        PWD_BACK=$(pwd)
+      - |
+        dirsum() { 
+          find "$1" -type f -exec md5sum {} \; | sort -k 2 | md5sum | cut -d" " -f1; 
+        }
+
+        lssum() { 
+          find "$1" -type f -exec md5sum {} \; | sort -k 2; 
+        }
+
+        get_cache_changes() 
+        {
+          # create checksums
+          dirsum "$SHARED_FOLDER_PATH/package.json" > dir.shared.npm.package.md5
+          dirsum "$SHARED_FOLDER_PATH" > dir.shared.md5
+          lssum appi/ > ls.appi.md5
+
+          echo "cache before"
+          ls -lHa "$CACHE_DIR"
+          echo "end cache"
+
+          # check directory
+          if [ -d "$CACHE_DIR" ]; then
+            echo "Directory $CACHE_DIR exists." && ls -laH "$CACHE_DIR"
+
+            if [ -n "$(cmp dir.shared.npm.package.md5 $CACHE_DIR/dir.shared.npm.package.md5 2>/dev/null)" ] || [ ! -f $CACHE_DIR/dir.shared.npm.package.md5 ]; then
+              DEPLOY_NODE_LAYER=1
+            else 
+              DEPLOY_NODE_LAYER=0
+            fi
+            if [ -n "$(cmp dir.shared.md5 $CACHE_DIR/dir.shared.md5 2>/dev/null)" ] || [ ! -f $CACHE_DIR/dir.shared.md5 ]; then
+              DEPLOY_ALL_FUNCTIONS=1
+            else
+              DEPLOY_ALL_FUNCTIONS=0
+            fi
+
+            echo "DEPLOY_NODE_LAYER set to $DEPLOY_NODE_LAYER"
+            echo "DEPLOY_ALL_FUNCTIONS set to $DEPLOY_ALL_FUNCTIONS"
+          else
+            echo "Directory $CACHE_DIR does not exists. Making it."
+            mkdir "$CACHE_DIR"
+          fi
+
+          # overwirte old checksums
+          mv -f dir.shared.npm.package.md5 "$CACHE_DIR"
+          mv -f dir.shared.md5 "$CACHE_DIR"
+
+          echo "new cache is"
+          ls -laH "$CACHE_DIR" 
+        }        
+        get_cache_changes
+      - cd "$SHARED_FOLDER_PATH"
+      - echo "Installing packages and building Lambda layers..."
+      - |
+        if [ "$DEPLOY_NODE_LAYER" -eq 1 ] && [ -n "$(find . -maxdepth 1 -type f -name 'package.json')" ]; then
+          mkdir nodejs
+          npm install --production --loglevel=error
+          mv node_modules nodejs/node_modules
+          zip -r nodejs.zip nodejs >> /dev/null
+          NODE_LAYER_ARN=$(aws lambda publish-layer-version --layer-name "${NODE_LAYER}" --zip-file fileb://nodejs.zip --compatible-runtimes nodejs10.x nodejs8.10 --profile $PROFILE | jq -cr '.LayerVersionArn')
+          rm -rf nodejs.zip
+          rm -rf nodejs
+        else
+          echo "skipping node layer"
+        fi
+      - cd "$PWD_BACK"
+  build:
+    commands:
+      - echo "Uploading and updating Lambda functions..."
+      - |
+        update_lambda_config()
+        {
+          aws lambda update-function-configuration \
+          --region "${AWS_REGION}" \
+          --function-name "${1}" \
+          --layers "${2}" \
+          --profile $PROFILE
+        }
+        update_lambda()
+        {
+          aws lambda update-function-code \
+          --region "${AWS_REGION}" \
+          --function-name "${1}" \
+          --zip-file "fileb://${2}.zip" \
+          --profile $PROFILE
+        }
+        yaml2json() { 
+          ruby -ryaml -rjson -e 'puts JSON.pretty_generate(YAML.load(ARGF))' $* 
+        }
+
+        CHANGE_LIST=$(md5sum --quiet -c "$CACHE_DIR/ls.appi.md5" 2>/dev/null | cut -d":" -f1)
+        echo "change list"
+        echo "$CHANGE_LIST"
+
+        LAMBDAS=$(cat deploy.config.yaml | yaml2json | jq -c '.Lambdas')
+        for row in $(echo "${LAMBDAS}" | jq -r '.[] | @base64'); do
+          _jq() { 
+            echo "${row}" | base64 --decode | jq -r "${1}" 
+          }
+
+          name=$(_jq '.name')
+          path=$(_jq '.path')
+
+          if [ "$DEPLOY_ALL_FUNCTIONS" != 1 ]; then
+            if [[ "$CHANGE_LIST" = *"$path"* ]]; then
+              echo "uploading $name"
+            else
+              echo "skipping $name"
+              continue
+            fi
+          fi
+
+          PWD_BACK=$(pwd)
+          rsync -avzhe --exclude='package*.json' --exclude='tests' --exclude='requirements*.txt' "$SHARED_FOLDER_PATH" "$path" >> /dev/null
+          
+          cd "$path"
+
+          if [ "$name" = "$WORKSHEET_PDF" ]; then
+            npm install --loglevel=error
+            echo "running npm run package"
+            npm run package
+          else
+            zip -qdgds 10M -r "${name}.zip" *
+          fi
+
+          update_lambda "${STACK_NAME}-${STAGE_NAME}-${name}" "${name}"
+
+          if [ "$DEPLOY_NODE_LAYER" -eq 1 ] && [ -n "$(find . -maxdepth 1 -type f -name '*.js')" ] && [ -n "${NODE_LAYER_ARN}" ] && [ "$name" != "$WORKSHEET_PDF" ]; then
+            update_lambda_config "${STACK_NAME}-${STAGE_NAME}-${name}" "${NODE_LAYER_ARN}"
+          fi
+
+          rm -rf "${name}".zip
+          cd "$PWD_BACK"
+        done
+
+        # add new individual changes to cache
+        mv -f ls.appi.md5 "$CACHE_DIR"
+
+cache:
+  paths:
+    - '.appi_cache/**/*'
+artifacts:
+  files:
+    - '**/*'

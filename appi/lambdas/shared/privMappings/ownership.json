@@ -1,0 +1,12 @@
+{
+    "primaryKey": "ownershipId",
+    "PROO1": {
+        "type": "row",
+        "keys": [
+            "personName",
+            "title",
+            "shares",
+            "boardRep"
+        ]
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "primaryKey": "cashFlowId",
+    "PROC1": "month",
+    "PROC3": {
+        "rowHeader": true,
+        "keys": [
+            "cashFlowOps",
+            "cashFlowInv",
+            "cashFlowFin",
+            "newChangeCash"
+        ]
+    }
+}

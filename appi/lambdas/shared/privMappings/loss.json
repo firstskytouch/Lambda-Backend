@@ -1,0 +1,15 @@
+{
+    "PROO1": {
+        "type": "row",
+        "keys": [
+            "claimant",
+            "carrier",
+            "effDate",
+            "expDate",
+            "totalPaid",
+            "totalIncurred",
+            "causeOfLoss",
+            "claimStatus"
+        ]
+    }
+}

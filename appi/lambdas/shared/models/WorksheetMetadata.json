@@ -1,0 +1,37 @@
+{
+  "type" : "object",
+  "required" : ["worksheet_id", "document_type", "submission_id"],
+  "properties" : {
+    "user_id" : {
+      "type" : "string"
+    },
+    "user_email" : {
+      "type" : "string"
+    },
+    "worksheet_id" : {
+      "type" : "string"
+    },
+    "central_index_key" : {
+      "type" : "string"
+    },
+    "company_name" : {
+      "type" : "string"
+    },
+    "submission_id" : {
+      "type" : "string"
+    },
+    "policy_id" : {
+      "type" : "string"
+    },
+    "document_type" : {
+      "type" : "string"
+    },
+    "coverage_type" : {
+      "type" : "string"
+    },
+    "effective_date" : {
+      "type" : "string",
+      "format" : "date"
+    }
+  }
+}

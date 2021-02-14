@@ -1,0 +1,61 @@
+{
+    "type" : "object",
+    "title" : "Porgram",
+    "required" : [ "num_layers", "retention", "tower_size", "worksheet_id", "effective_date" ],
+    "properties" : {
+      "program_id" : {
+        "type" : "string",
+        "default" : ""
+      },
+      "tower_size" : {
+        "type" : "number"
+      },
+      "num_layers" : {
+        "type" : "number"
+      },
+      "retention" : {
+        "type" : "number"
+      },
+      "created_at" : {
+        "type" : "string",
+        "format" : "date-time"
+      },
+      "updated_at" : {
+        "type" : "string",
+        "format" : "date-time"
+      },
+      "worksheet_id" : {
+        "type" : "string"
+      },
+      "effective_date" : {
+        "type" : "string",
+        "format" : "date"
+      },
+      "table" : {
+        "type" : "object",
+        "properties" : {
+            "data": {
+                "type" : "array",
+                "required" : [ "layer", "attachment", "carrier", "limit", "premium"],
+                "properties" : {
+                  "layer" : {
+                    "type" : "string"
+                  },
+                  "ciattachmentk" : {
+                    "type" : "number"
+                  },
+                  "carrier" : {
+                    "type" : "string"
+                  },
+                  "limit" : {
+                    "type" : "number"
+                  },
+                  "premium" : {
+                      "type" : "number"
+                    }
+                }
+            }
+        }
+      }
+    }
+  }

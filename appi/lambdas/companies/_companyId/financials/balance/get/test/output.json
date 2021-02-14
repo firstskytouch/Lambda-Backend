@@ -1,0 +1,517 @@
+{
+   "annual": {
+      "assets": {
+         "title": "Assets",
+         "table": {
+            "columns": [
+               {
+                  "title": "item",
+                  "field": "item"
+               },
+               {
+                  "title": "2018-12-31",
+                  "field": "2018-12-31"
+               },
+               {
+                  "title": "2017-12-31",
+                  "field": "2017-12-31"
+               },
+               {
+                  "title": "2016-12-31",
+                  "field": "2016-12-31"
+               }
+            ],
+            "data": [
+               {
+                  "item": "Cash And Equivalents",
+                  "subtotal": false,
+                  "2018-12-31": "8926000",
+                  "2017-12-31": "6006000",
+                  "2016-12-31": "8555000"
+               },
+               {
+                  "item": "Total Cash And Short Term Investments",
+                  "subtotal": true,
+                  "2018-12-31": "15964000",
+                  "2017-12-31": "20675000",
+                  "2016-12-31": "22201000"
+               },
+               {
+                  "item": "Total Receivables",
+                  "subtotal": false,
+                  "2018-12-31": "3396000",
+                  "2017-12-31": "3667000",
+                  "2016-12-31": "3856000"
+               },
+               {
+                  "item": "Inventory",
+                  "subtotal": false,
+                  "2018-12-31": "2766000",
+                  "2017-12-31": "2655000",
+                  "2016-12-31": "2675000"
+               },
+               {
+                  "item": "Prepaid Expenses",
+                  "subtotal": false,
+                  "2018-12-31": "1849000",
+                  "2017-12-31": "1902000",
+                  "2016-12-31": "1686000"
+               },
+               {
+                  "item": "Other Current Assets, Total",
+                  "subtotal": false,
+                  "2018-12-31": "6659000",
+                  "2017-12-31": "7646000",
+                  "2016-12-31": "3592000"
+               },
+               {
+                  "item": "Total Current Assets",
+                  "subtotal": true,
+                  "2018-12-31": "30634000",
+                  "2017-12-31": "36545000",
+                  "2016-12-31": "34010000"
+               },
+               {
+                  "item": "Net Property Plant And Equipment",
+                  "subtotal": false,
+                  "2018-12-31": "8232000",
+                  "2017-12-31": "8203000",
+                  "2016-12-31": "10635000"
+               },
+               {
+                  "item": "Long-term Investments",
+                  "subtotal": false,
+                  "2018-12-31": "21533000",
+                  "2017-12-31": "23281000",
+                  "2016-12-31": "18569000"
+               },
+               {
+                  "item": "Goodwill",
+                  "subtotal": false,
+                  "2018-12-31": "10263000",
+                  "2017-12-31": "9401000",
+                  "2016-12-31": "10629000"
+               },
+               {
+                  "item": "Other Intangibles",
+                  "subtotal": false,
+                  "2018-12-31": "7007000",
+                  "2017-12-31": "7235000",
+                  "2016-12-31": "10499000"
+               },
+               {
+                  "item": "Other Assets, Total",
+                  "subtotal": false,
+                  "2018-12-31": "5547000",
+                  "2017-12-31": "3231000",
+                  "2016-12-31": "2928000"
+               },
+               {
+                  "item": "Total Assets",
+                  "subtotal": true,
+                  "2018-12-31": "83216000",
+                  "2017-12-31": "87896000",
+                  "2016-12-31": "87270000"
+               },
+               {
+                  "item": "Short Term Investments",
+                  "subtotal": false,
+                  "2018-12-31": "7038000",
+                  "2017-12-31": "14669000",
+                  "2016-12-31": "13646000"
+               }
+            ]
+         }
+      },
+      "liabilities": {
+         "title": "Liabilities",
+         "table": {
+            "columns": [
+               {
+                  "title": "item",
+                  "field": "item"
+               },
+               {
+                  "title": "2018-12-31",
+                  "field": "2018-12-31"
+               },
+               {
+                  "title": "2017-12-31",
+                  "field": "2017-12-31"
+               },
+               {
+                  "title": "2016-12-31",
+                  "field": "2016-12-31"
+               }
+            ],
+            "data": [
+               {
+                  "item": "Accrued Expenses",
+                  "subtotal": false,
+                  "2018-12-31": "6348000",
+                  "2017-12-31": "6380000",
+                  "2016-12-31": "6008000"
+               },
+               {
+                  "item": "Accounts Payable",
+                  "subtotal": false,
+                  "2018-12-31": "2498000",
+                  "2017-12-31": "2288000",
+                  "2016-12-31": "2682000"
+               },
+               {
+                  "item": "Current Portion of Long Term Debt/Capital Leases",
+                  "subtotal": false,
+                  "2018-12-31": "4997000",
+                  "2017-12-31": "3298000",
+                  "2016-12-31": "3527000"
+               },
+               {
+                  "item": "Other Current Liabilities, Total",
+                  "subtotal": false,
+                  "2018-12-31": "2186000",
+                  "2017-12-31": "2023000",
+                  "2016-12-31": "1817000"
+               },
+               {
+                  "item": "Total Current Liabilities",
+                  "subtotal": true,
+                  "2018-12-31": "29223000",
+                  "2017-12-31": "27194000",
+                  "2016-12-31": "26532000"
+               },
+               {
+                  "item": "Long Term Debt",
+                  "subtotal": false,
+                  "2018-12-31": "25404000",
+                  "2017-12-31": "31221000",
+                  "2016-12-31": "29732000"
+               },
+               {
+                  "item": "Other Liabilities, Total",
+                  "subtotal": false,
+                  "2018-12-31": "9531000",
+                  "2017-12-31": "10504000",
+                  "2016-12-31": "7786000"
+               },
+               {
+                  "item": "Total Liabilities",
+                  "subtotal": true,
+                  "2018-12-31": "64158000",
+                  "2017-12-31": "68919000",
+                  "2016-12-31": "64050000"
+               },
+               {
+                  "item": "Short-term Borrowings",
+                  "subtotal": false,
+                  "2018-12-31": "13194000",
+                  "2017-12-31": "13205000",
+                  "2016-12-31": "12498000"
+               }
+            ]
+         }
+      },
+      "stockholder_equity": {
+         "title": "Stockholders' Equity",
+         "table": {
+            "columns": [
+               {
+                  "title": "item",
+                  "field": "item"
+               },
+               {
+                  "title": "2018-12-31",
+                  "field": "2018-12-31"
+               },
+               {
+                  "title": "2017-12-31",
+                  "field": "2017-12-31"
+               },
+               {
+                  "title": "2016-12-31",
+                  "field": "2016-12-31"
+               }
+            ],
+            "data": [
+               {
+                  "item": "Common Stock",
+                  "subtotal": false,
+                  "2018-12-31": "1760000",
+                  "2017-12-31": "1760000",
+                  "2016-12-31": "1760000"
+               },
+               {
+                  "item": "Additional Paid In Capital",
+                  "subtotal": false,
+                  "2018-12-31": "16520000",
+                  "2017-12-31": "15864000",
+                  "2016-12-31": "14993000"
+               },
+               {
+                  "item": "Retained Earnings",
+                  "subtotal": false,
+                  "2018-12-31": "63234000",
+                  "2017-12-31": "60430000",
+                  "2016-12-31": "65502000"
+               },
+               {
+                  "item": "Treasury Stock & Other",
+                  "subtotal": false,
+                  "2018-12-31": "-64533000",
+                  "2017-12-31": "-60982000",
+                  "2016-12-31": "-59193000"
+               },
+               {
+                  "item": "Total Common Equity",
+                  "subtotal": true,
+                  "2018-12-31": "16981000",
+                  "2017-12-31": "17072000",
+                  "2016-12-31": "23062000"
+               },
+               {
+                  "item": "Minority Interest",
+                  "subtotal": false,
+                  "2018-12-31": "2077000",
+                  "2017-12-31": "1905000",
+                  "2016-12-31": "158000"
+               },
+               {
+                  "item": "Total Equity",
+                  "subtotal": true,
+                  "2018-12-31": "19058000",
+                  "2017-12-31": "18977000",
+                  "2016-12-31": "23220000"
+               },
+               {
+                  "item": "Total Liabilities And Equity",
+                  "subtotal": true,
+                  "2018-12-31": "83216000",
+                  "2017-12-31": "87896000",
+                  "2016-12-31": "87270000"
+               }
+            ]
+         }
+      },
+      "statutory_surplus": {
+         "title": "Statutory Surplus",
+         "table": {
+            "columns": [],
+            "data": []
+         }
+      }
+   },
+   "quarterly": {
+      "assets": {
+         "title": "Assets",
+         "table": {
+            "columns": [
+               {
+                  "title": "item",
+                  "field": "item"
+               },
+               {
+                  "title": "2019-03-29",
+                  "field": "2019-03-29"
+               }
+            ],
+            "data": [
+               {
+                  "item": "Cash And Equivalents",
+                  "subtotal": false,
+                  "2019-03-29": "5645000"
+               },
+               {
+                  "item": "Total Cash And Short Term Investments",
+                  "subtotal": true,
+                  "2019-03-29": "11948000"
+               },
+               {
+                  "item": "Total Receivables",
+                  "subtotal": false,
+                  "2019-03-29": "3852000"
+               },
+               {
+                  "item": "Inventory",
+                  "subtotal": false,
+                  "2019-03-29": "3178000"
+               },
+               {
+                  "item": "Prepaid Expenses",
+                  "subtotal": false,
+                  "2019-03-29": "2848000"
+               },
+               {
+                  "item": "Other Current Assets, Total",
+                  "subtotal": false,
+                  "2019-03-29": "6714000"
+               },
+               {
+                  "item": "Total Current Assets",
+                  "subtotal": true,
+                  "2019-03-29": "28540000"
+               },
+               {
+                  "item": "Net Property Plant And Equipment",
+                  "subtotal": false,
+                  "2019-03-29": "10108000"
+               },
+               {
+                  "item": "Long-term Investments",
+                  "subtotal": false,
+                  "2019-03-29": "21767000"
+               },
+               {
+                  "item": "Goodwill",
+                  "subtotal": false,
+                  "2019-03-29": "12964000"
+               },
+               {
+                  "item": "Other Intangibles",
+                  "subtotal": false,
+                  "2019-03-29": "9780000"
+               },
+               {
+                  "item": "Other Assets, Total",
+                  "subtotal": false,
+                  "2019-03-29": "5188000"
+               },
+               {
+                  "item": "Total Assets",
+                  "subtotal": true,
+                  "2019-03-29": "88347000"
+               },
+               {
+                  "item": "Short Term Investments",
+                  "subtotal": false,
+                  "2019-03-29": "6303000"
+               }
+            ]
+         }
+      },
+      "liabilities": {
+         "title": "Liabilities",
+         "table": {
+            "columns": [
+               {
+                  "title": "item",
+                  "field": "item"
+               },
+               {
+                  "title": "2019-03-29",
+                  "field": "2019-03-29"
+               }
+            ],
+            "data": [
+               {
+                  "item": "Accrued Expenses",
+                  "subtotal": false
+               },
+               {
+                  "item": "Accounts Payable",
+                  "subtotal": false,
+                  "2019-03-29": "10669000"
+               },
+               {
+                  "item": "Current Portion of Long Term Debt/Capital Leases",
+                  "subtotal": false,
+                  "2019-03-29": "3548000"
+               },
+               {
+                  "item": "Other Current Liabilities, Total",
+                  "subtotal": false,
+                  "2019-03-29": "2156000"
+               },
+               {
+                  "item": "Total Current Liabilities",
+                  "subtotal": true,
+                  "2019-03-29": "27943000"
+               },
+               {
+                  "item": "Long Term Debt",
+                  "subtotal": false,
+                  "2019-03-29": "30445000"
+               },
+               {
+                  "item": "Other Liabilities, Total",
+                  "subtotal": false,
+                  "2019-03-29": "10155000"
+               },
+               {
+                  "item": "Total Liabilities",
+                  "subtotal": true,
+                  "2019-03-29": "68543000"
+               },
+               {
+                  "item": "Short-term Borrowings",
+                  "subtotal": false,
+                  "2019-03-29": "11570000"
+               }
+            ]
+         }
+      },
+      "stockholder_equity": {
+         "title": "Stockholders' Equity",
+         "table": {
+            "columns": [
+               {
+                  "title": "item",
+                  "field": "item"
+               },
+               {
+                  "title": "2019-03-29",
+                  "field": "2019-03-29"
+               }
+            ],
+            "data": [
+               {
+                  "item": "Common Stock",
+                  "subtotal": false,
+                  "2019-03-29": "1760000"
+               },
+               {
+                  "item": "Additional Paid In Capital",
+                  "subtotal": false,
+                  "2019-03-29": "16577000"
+               },
+               {
+                  "item": "Retained Earnings",
+                  "subtotal": false,
+                  "2019-03-29": "63704000"
+               },
+               {
+                  "item": "Treasury Stock & Other",
+                  "subtotal": false,
+                  "2019-03-29": "-64306000"
+               },
+               {
+                  "item": "Total Common Equity",
+                  "subtotal": true,
+                  "2019-03-29": "17735000"
+               },
+               {
+                  "item": "Minority Interest",
+                  "subtotal": false,
+                  "2019-03-29": "2069000"
+               },
+               {
+                  "item": "Total Equity",
+                  "subtotal": true,
+                  "2019-03-29": "19804000"
+               },
+               {
+                  "item": "Total Liabilities And Equity",
+                  "subtotal": true,
+                  "2019-03-29": "88347000"
+               }
+            ]
+         }
+      },
+      "statutory_surplus": {
+         "title": "Statutory Surplus",
+         "table": {
+            "columns": [],
+            "data": []
+         }
+      }
+   }
+}

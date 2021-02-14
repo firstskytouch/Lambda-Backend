@@ -1,0 +1,197 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: APPI Backend - S&P Chrome Ext.
+Parameters:
+  StackName:
+    Type: String
+    Default: appi
+
+  EnvironmentType:
+    Type: String
+    Default: dev
+    AllowedValues:
+    - dev
+    - qa
+    - prod
+
+  LambdaExecutionRoleArn:
+    Type: String
+
+  # NETWORK
+
+  SecurityGroupId:
+    Type: AWS::EC2::SecurityGroup::Id
+
+  Subnets:
+    Type: List<AWS::EC2::Subnet::Id>
+
+Resources:
+
+  ScoresTable:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      TableName: !Sub '${StackName}-${EnvironmentType}-snp-credit-scores'
+      AttributeDefinitions:
+        - AttributeName: requestId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: requestId
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: '5'
+        WriteCapacityUnits: '5'
+
+  ApiGatewayRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - apigateway.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
+      Policies:
+        - PolicyName: root
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action: '*'
+                Resource: '*'
+
+  ApiDeployment:
+    Type: AWS::ApiGateway::Deployment
+    Properties:
+      RestApiId: !Ref ApiGateway
+      Description: !Sub '${EnvironmentType} deployment'
+      # StageName: v1
+    DependsOn: ApiGateway
+
+  ApiStage:
+    Type: AWS::ApiGateway::Stage
+    Properties: 
+      DeploymentId: !Ref ApiDeployment
+      RestApiId: !Ref ApiGateway
+      StageName: v1
+      Variables: 
+        EnvironmentType: !Ref EnvironmentType
+    DependsOn: 
+      - ApiGateway
+      - ApiDeployment
+
+  ApiUsagePlan:
+    Type: AWS::ApiGateway::UsagePlan
+    Properties: 
+      UsagePlanName: !Sub '${StackName}-${EnvironmentType}-snp-chrome-ext-usage-plan'
+      Description: S&P Chrome Ext API Usage Plan
+      ApiStages: 
+        - ApiId: !Ref ApiGateway
+          Stage: v1
+      Quota:
+        Limit: 5000
+        Period: DAY
+      Throttle:
+        BurstLimit: 200
+        RateLimit: 100
+    DependsOn:
+      - ApiGateway
+      - ApiDeployment
+      - ApiStage
+
+  ApiGateway:
+    Type: 'AWS::ApiGateway::RestApi'
+    Properties:
+      Body: !Sub |
+        ---
+        swagger: "2.0"
+        info:
+          version: "1.0.0"
+          title: "S&P Chrome Ext Receiver - (${EnvironmentType})"
+        schemes:
+        - "https"
+        paths:
+          /:
+            post:
+              produces:
+              - "application/json"
+              responses:
+                200:
+                  description: "200 response"
+                  schema:
+                    $ref: "#/definitions/Empty"
+                  headers:
+                    Access-Control-Allow-Origin:
+                      type: "string"
+                400:
+                  description: "400 response"
+                  schema:
+                    $ref: '#/definitions/Error'
+                500:
+                  description: "500 response"
+                  schema:
+                    $ref: '#/definitions/Error'
+              security:
+              - api_key: []
+              x-amazon-apigateway-integration:
+                uri: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${StackName}-${EnvironmentType}-snp-chrome-ext-post/invocations"
+                responses:
+                  default:
+                    statusCode: "200"
+                credentials: "${LambdaExecutionRoleArn}"
+                passthroughBehavior: "when_no_match"
+                httpMethod: "POST"
+                contentHandling: "CONVERT_TO_TEXT"
+                type: "aws_proxy"
+                authorizationType: "AWS_IAM"
+            options:
+              tags:
+                - options
+              consumes:
+              - "application/json"
+              produces:
+              - "application/json"
+              responses:
+                200:
+                  description: "200 response"
+                  schema:
+                    $ref: "#/definitions/Empty"
+                  headers:
+                    Access-Control-Allow-Origin:
+                      type: "string"
+                    Access-Control-Allow-Methods:
+                      type: "string"
+                    Access-Control-Allow-Headers:
+                      type: "string"
+              security:
+              - api_key: []
+              x-amazon-apigateway-integration:
+                responses:
+                  default:
+                    statusCode: "200"
+                    responseParameters:
+                      method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+                      method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                      method.response.header.Access-Control-Allow-Origin: "'*'"
+                requestTemplates:
+                  application/json: "{\"statusCode\": 200}"
+                passthroughBehavior: "when_no_templates"
+                type: "mock"
+        securityDefinitions:
+          api_key:
+            type: "apiKey"
+            name: "x-api-key"
+            in: "header"
+        definitions:
+          Empty:
+            type: "object"
+            title: "Empty Schema"
+
